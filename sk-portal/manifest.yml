@@ -1,0 +1,7 @@
+---
+version: 1
+applications:
+- name: sk-portal
+  routes:
+    - route: ((SK_PORTAL_ROUTE))
+  memory: 64M

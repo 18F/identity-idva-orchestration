@@ -1,0 +1,16 @@
+---
+version: 1
+applications:
+- name: sk-api
+  memory: 256M
+  instances: 2
+  buildpacks:
+    - binary_buildpack
+  command: ./sk-app
+  routes:
+    - route: ((SK_API_ROUTE))
+  services:
+    - sk-postgres
+    - sk-redis
+  env:
+    SK_SECRETS: ((SK_SECRETS))

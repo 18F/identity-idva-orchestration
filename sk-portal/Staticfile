@@ -1,0 +1,3 @@
+root: portal/build
+status_codes:
+  404: /index.html

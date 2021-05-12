@@ -1,0 +1,7 @@
+---
+version: 1
+applications:
+- name: sk-sdk
+  routes:
+    - route: ((SK_SDK_ROUTE))
+  memory: 64M

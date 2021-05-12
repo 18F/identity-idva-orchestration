@@ -1,0 +1,16 @@
+---
+version: 1
+applications:
+- name: sk-oe
+  memory: 256M
+  instances: 2
+  buildpacks:
+    - binary_buildpack
+  command: ./sk-app
+  health-check-type: process
+  no-route: true
+  services:
+    - sk-postgres
+    - sk-redis
+  env:
+    SK_SECRETS: ((SK_SECRETS))

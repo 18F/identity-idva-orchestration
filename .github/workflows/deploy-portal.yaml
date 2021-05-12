@@ -1,0 +1,48 @@
+---
+# This workflow will run deploy the portal static files
+
+name: Deploy portal
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+    paths:
+      - 'sk-portal/**'
+      - '.github/workflows/deploy-portal.yaml'
+
+jobs:
+  deploy:
+    if: github.repository_owner == '18F'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install CloudFoundry CLI
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v7&source=github" | sudo tar -zx --directory=/usr/local/bin
+          cf --version
+
+      - name: Setup CF CLI auth
+        run: |
+          cf api https://api.fr.cloud.gov
+          cf auth ${{ secrets.CF_USERNAME }} ${{ secrets.CF_PASSWORD }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Download app file with AWS CLI
+        run: aws s3 sync s3://com.singularkey.gsa/dev/sk-portal/ sk-portal/portal
+
+      - name: Deploy application
+        run: |
+          cf target -o gsa-tts-identity-prototyping -s give-dev
+          cd sk-portal
+          cf push --var SK_PORTAL_ROUTE=${{ secrets.SK_PORTAL_ROUTE }} --strategy rolling

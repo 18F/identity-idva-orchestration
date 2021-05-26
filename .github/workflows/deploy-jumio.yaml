@@ -1,7 +1,7 @@
 ---
-# This workflow will run deploy the oe microservice
+# This workflow will deploy the jumio microservice
 
-name: Deploy oe
+name: Deploy jumio
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-oe/**'
-      - '.github/workflows/deploy-oe.yaml'
+      - 'sk-jumio/**'
+      - '.github/workflows/deploy-jumio.yaml'
 
 jobs:
   deploy:
@@ -60,16 +60,16 @@ jobs:
 
       - name: Download app file with AWS CLI
         run: |
-          aws s3 cp s3://com.singularkey.gsa/dev/oe/hash sk-oe/hash
-          aws s3 cp "s3://com.singularkey.gsa/dev/oe/$(cat sk-oe/version)" sk-oe/sk-app
+          aws s3 cp s3://com.singularkey.gsa/dev/microservice-jumio/hash sk-jumio/hash
+          aws s3 cp "s3://com.singularkey.gsa/dev/microservice-jumio/$(cat sk-jumio/version)" sk-jumio/sk-app
 
       - name: Check hash
         run: |
-          cd sk-oe
+          cd sk-jumio
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-oe/sk-app
+        run: chmod +x sk-jumio/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         run: |
@@ -80,5 +80,5 @@ jobs:
       - name: Deploy application
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-          cd sk-oe
+          cd sk-jumio
           cf push --vars-file ../vars.yaml --strategy rolling

@@ -2,12 +2,14 @@
 version: 1
 applications:
 - name: sk-manifest
-  memory: 128M
-  instances: 1
+  processes:
+  - type: task
+    memory: 128M
+    instances: 1
+    command: ./sk-app
   no-route: true
   buildpacks:
    - binary_buildpack
-  command: ./sk-app
   services:
     - sk-postgres
   env:

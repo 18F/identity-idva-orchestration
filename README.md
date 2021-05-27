@@ -17,7 +17,7 @@ The orchestration service consists of a set of microservices
  - manifest - this app is run as a cf task to update the postgres db with data about the available connectors.
 
 #### Connectors ####
-These micrservices provides connectors that can be used in flows.
+These microservices provides connectors that can be used in flows.
 
 http, challenge, credential, fido, flow, functions, iovation, jumio, openid, totp, transunion, userpolicy, variables.
 

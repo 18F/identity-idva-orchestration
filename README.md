@@ -7,7 +7,7 @@ Orchestration component of GIVE
 The orchestration service consists of a set of microservices
 
  - oe - The orchestration service. (Only service that needs to know how many instances of itself there are.)
- - api - The api service provides the api interface for the application and is the only service that is exteranlly exposed.
+ - api - The api service provides the api interface for the application and is the only service that is externally exposed.
  - portal - A static file app serving the admin portal React app
  - sdk - A static file app serving javascript sdk file
  - event - The event service recordes flow event data in elasticsearch
@@ -19,7 +19,7 @@ The orchestration service consists of a set of microservices
 #### Connectors ####
 These micrservices provides connectors that can be used in flows.
 
-http, challenge, crendentail, fido, flow, functions, iovation,jumio,openid, totp, transunion,userpolicy,variables.
+http, challenge, credential, fido, flow, functions, iovation, jumio, openid, totp, transunion, userpolicy, variables.
 
 
 ## Deploying Services
@@ -38,7 +38,7 @@ cf create-service aws-elasticsearch es-dev sk-elasticsearch
 
 ### Redis
 
-Connecting to this redis instance requires tls. This is a [compile time](https://redis.io/topics/encryption) feature in redis so it is nessary to compile the redis cli client. The other option is to use a proxy such as [stunnel](https://www.stunnel.org/).
+Connecting to this Redis instance requires TLS. This is a [compile time](https://redis.io/topics/encryption) feature in Redis so it is necessary to compile the Redis cli client. The other option is to use a proxy such as [stunnel](https://www.stunnel.org/).
 
 ```
 cf connect-to-service -no-client sk-api sk-redis
@@ -57,7 +57,7 @@ cf ssh -T -L 443:<elasticsearch hostname>:443 sk-events
 ```
 awscurl --region <region> --service es --access_key <access key> --secret_key <secret> -X GET 'https://<elasticsearch hostname>/_cat/indices?v'
 ```
-It is nessary to add a host file entry for the elasticsearch hostname in order for the signautures to be calculated correclty.
+It is necessary to add a host file entry for the Elasticsearch hostname in order for the signatures to be calculated correctly.
 ```
 127.0.0.1 ....es.amazonaws.com
 ```

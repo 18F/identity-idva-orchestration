@@ -82,3 +82,7 @@ jobs:
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
           cd sk-http
           cf push --vars-file ../vars.yaml --strategy rolling
+
+      - name: Apply CF Network Policies
+        run: |
+          cf add-network-policy sk-http usps

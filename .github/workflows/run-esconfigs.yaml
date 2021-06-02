@@ -1,0 +1,87 @@
+---
+# This workflow will run the esconfigs app initilize elasticsearch
+
+name: Run esconfigs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+    paths:
+      - 'sk-esconfigs/**'
+      - '.github/workflows/run-esconfigs.yaml'
+
+jobs:
+  deploy:
+    #if: github.repository_owner == '18F'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install CloudFoundry CLI
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v7&source=github" | sudo tar -zx --directory=/usr/local/bin
+          cf --version
+
+      - name: Setup CF CLI auth
+        run: |
+          cf api https://api.fr.cloud.gov
+          cf auth ${{ secrets.CF_USERNAME }} ${{ secrets.CF_PASSWORD }}
+
+      - name: Determine deployment target
+        id: deployment-target
+        env:
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          # Use the Github reference to determine environment values
+          if [[ $GITHUB_REF == "refs/heads/main" ]]; then
+              # Pushes to main are deployed to dev
+              target_environment=give-dev
+          elif [[ $GITHUB_REF =~ refs/tags/* ]]; then
+              # Tags on main are deployed to test
+              target_environment=give-test
+          else
+              echo 'Unknown deployment target'
+              exit 1
+          fi
+          # Set the outputs for this step
+          echo "::set-output name=SPACE::$target_environment"
+          echo "Deploying to $target_environment"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Download app file with AWS CLI
+        run: |
+          aws s3 cp s3://com.singularkey.gsa/dev/elasticsearch-configs/hash sk-esconfigs/hash
+          aws s3 cp "s3://com.singularkey.gsa/dev/elasticsearch-configs/$(cat sk-esconfigs/version)" sk-esconfigs/sk-app
+
+      - name: Check hash
+        run: |
+          cd sk-esconfigs
+          sha256sum -c hash
+
+      - name: Make Executable
+        run: chmod +x sk-esconfigs/sk-app
+
+      - name: Write SingularKey secrets to CF vars file
+        run: |
+          echo "---" > vars.yaml
+          echo "SK_SECRETS: |" >> vars.yaml
+          echo '  ${{ secrets.SK_SECRETS }}' >> vars.yaml
+
+      - name: Deploy application
+        run: |
+          cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
+          cd sk-esconfigs
+          cf push --vars-file ../vars.yaml --task
+
+      - name: Run esconfigs task
+        run: cf run-task sk-esconfigs --name task

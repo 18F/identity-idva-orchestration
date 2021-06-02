@@ -1,0 +1,16 @@
+---
+version: 1
+applications:
+- name: sk-esconfigs
+  processes:
+  - type: task
+    memory: 128M
+    instances: 1
+    command: ./sk-app
+  no-route: true
+  buildpacks:
+   - binary_buildpack
+  services:
+    - sk-elasticsearch
+  env:
+    SK_SECRETS: ((SK_SECRETS))

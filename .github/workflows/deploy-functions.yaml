@@ -72,10 +72,13 @@ jobs:
         run: chmod +x sk-functions/sk-app
 
       - name: Write SingularKey secrets to CF vars file
+        env:
+          SK_SECRETS: ${{ secrets.SK_SECRETS }}
         run: |
+          echo "$SK_SECRETS" | jq empty
           echo "---" > vars.yaml
           echo "SK_SECRETS: |" >> vars.yaml
-          echo '  ${{ secrets.SK_SECRETS }}' >> vars.yaml
+          echo "$SK_SECRETS" | sed 's/^/  /' >> vars.yaml
 
       - name: Deploy application
         run: |

@@ -86,3 +86,4 @@ jobs:
       - name: Apply CF Network Policies
         run: |
           cf add-network-policy sk-http usps
+          cf add-network-policy sk-http usaccess

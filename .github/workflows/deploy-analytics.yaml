@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - main
-      - services
     tags:
       - '*'
     paths:
@@ -17,7 +16,7 @@ on:
 
 jobs:
   deploy:
-    #if: github.repository_owner == '18F'
+    if: github.repository_owner == '18F'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +44,8 @@ jobs:
               # Tags on main are deployed to test
               target_environment=give-test
           else
-              target_environment=give-dev
+              echo 'Unknown deployment target'
+              exit 1
           fi
           # Set the outputs for this step
           echo "::set-output name=SPACE::$target_environment"
@@ -66,7 +66,6 @@ jobs:
         run: |
           cd sk-analytics
           sha256sum -c hash
-          ls
 
       - name: Make Executable
         run: chmod +x sk-analytics/sk-app
@@ -80,8 +79,8 @@ jobs:
           echo "SK_SECRETS: |" >> vars.yaml
           echo "$SK_SECRETS" | sed 's/^/  /' >> vars.yaml
 
-      # - name: Deploy application
-      #   run: |
-      #     cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-      #     cd sk-analytics
-      #     cf push --vars-file ../vars.yaml --strategy rolling
+      - name: Deploy application
+        run: |
+          cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
+          cd sk-analytics
+          cf push --vars-file ../vars.yaml --strategy rolling

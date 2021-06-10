@@ -45,8 +45,7 @@ jobs:
               # Tags on main are deployed to test
               target_environment=give-test
           else
-              echo 'Unknown deployment target'
-              exit 1
+              target_environment=give-dev
           fi
           # Set the outputs for this step
           echo "::set-output name=SPACE::$target_environment"

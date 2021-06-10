@@ -60,8 +60,7 @@ jobs:
 
       - name: Download app file with AWS CLI
         run: |
-          aws s3 cp s3://com.singularkey.gsa/dev/microservice-analytics/hash sk-analytics/hash
-          aws s3 cp "s3://com.singularkey.gsa/dev/microservice-analytics/$(cat sk-analytics/version)" sk-analytics/sk-app
+          aws s3 sync s3://com.singularkey.gsa/dev/microservice-analytics/$(cat sk-analytics/version) sk-analytics
 
       - name: Check hash
         run: |

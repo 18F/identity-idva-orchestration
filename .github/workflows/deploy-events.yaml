@@ -62,9 +62,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: |
-          aws s3 cp s3://com.singularkey.gsa/dev/microservice-events/hash sk-events/hash
-          aws s3 cp "s3://com.singularkey.gsa/dev/microservice-events/$(cat sk-events/version)" sk-events/sk-app
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-events/$(cat sk-events/version) sk-events
 
       - name: Check hash
         run: |

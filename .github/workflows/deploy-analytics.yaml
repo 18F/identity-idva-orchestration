@@ -59,8 +59,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: |
-          aws s3 sync s3://com.singularkey.gsa/dev/microservice-analytics/$(cat sk-analytics/version) sk-analytics
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-analytics/$(cat sk-analytics/version) sk-analytics
 
       - name: Check hash
         run: |

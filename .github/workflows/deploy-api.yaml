@@ -65,9 +65,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: |
-          aws s3 cp s3://com.singularkey.gsa/dev/api/hash sk-api/hash
-          aws s3 cp "s3://com.singularkey.gsa/dev/api/$(cat sk-api/version)" sk-api/sk-app
+        run: aws s3 sync s3://com.singularkey.gsa/dev/api/$(cat sk-api/version) sk-api
 
       - name: Check hash
         run: |

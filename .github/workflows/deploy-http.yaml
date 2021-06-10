@@ -59,9 +59,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: |
-          aws s3 cp s3://com.singularkey.gsa/dev/microservice-http/hash sk-http/hash
-          aws s3 cp "s3://com.singularkey.gsa/dev/microservice-http/$(cat sk-http/version)" sk-http/sk-app
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-http/$(cat sk-http/version) sk-http
 
       - name: Check hash
         run: |

@@ -1,14 +1,34 @@
 #!/bin/bash
 
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+should_create=true
+
+while getopt "c" option; do
+    case ${option} in
+        c )
+            should_create=false
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -n "$4" ]; then
     cat << EOF
-"Usage: $0 CF_SERVICE_NAME SERVICE PLAN
+Usage
+        $0 [-c] CF_SERVICE_NAME SERVICE PLAN
 
-Examples:
-  ensure_service_available my-app-db aws-rds micro-psql
+Description
+        This script checks for the existance of the specified service and optionally creates it if it does not exist.
 
-NOTE - this script will only create services if they do not exist.
-       It will NOT update services to match the provided plan type.
+        NOTE - this script will only create services if they do not exist.
+        It will NOT update services to match the provided plan type.
+
+Options
+        -c
+            Check for service only. Do NOT create service if it does not exist.
+
+Examples
+        ensure_service_available my-app-db aws-rds micro-psql
 EOF
     exit 1
 fi
@@ -46,10 +66,15 @@ create_service() {
 
 # Test if cf service exists at all
 if ! cf services | grep --silent "^$cf_service_name "; then
-    echo "Unable to find service: $cf_service_name. Creating..."
-    create_service
-    wait_for_service_creation
-    exit 0
+    echo "Unable to find service: $cf_service_name." 
+    if [ "$should_create" = true ] ; then
+        echo "Creating..."
+        create_service
+        wait_for_service_creation
+        exit 0
+    else
+        exit 1
+    fi
 fi
 
 # The service existed, but the service status is not yet known

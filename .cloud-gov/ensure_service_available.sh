@@ -67,14 +67,13 @@ create_service() {
 # Test if cf service exists at all
 if ! cf services | grep --silent "^$cf_service_name "; then
     echo "Unable to find service: $cf_service_name." 
-    if [ "$should_create" = true ] ; then
-        echo "Creating..."
-        create_service
-        wait_for_service_creation
-        exit 0
-    else
+    if [ "$should_create" = false ] ; then
         exit 1
     fi
+    echo "Creating..."
+    create_service
+    wait_for_service_creation
+    exit 0
 fi
 
 # The service existed, but the service status is not yet known

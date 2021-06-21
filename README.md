@@ -10,19 +10,40 @@ The orchestration service consists of a set of microservices
  - api - The api service provides the api interface for the application and is the only service that is externally exposed.
  - portal - A static file app serving the admin portal React app
  - sdk - A static file app serving javascript sdk file
- - event - The event service recordes flow event data in elasticsearch
+ - events - The event service recordes flow event data in elasticsearch
 
 #### Tasks ####
 
+ - dbconfigs - this app is run as a cf task to create and initilize the postgres db.
+ - esconfigs - this app is run as a cf task to create and initilize elasticserach.
  - manifest - this app is run as a cf task to update the postgres db with data about the available connectors.
 
 #### Connectors ####
 These microservices provides connectors that can be used in flows.
 
-http, challenge, credential, fido, flow, functions, iovation, jumio, openid, totp, transunion, userpolicy, variables.
+ - analyics
+ - challenge
+ - credential
+ - fido
+ - flow
+ - functions
+ - http
+ - iovation
+ - jumio
+ - openid
+ - totp
+ - transunion
+ - userpolicy
+ - variables
+ - webhook
 
+## Deploying the Application
 
-## Deploying Services
+The github actions workflows provision the services and deploy the applications.
+ 1. First the three services need to be provisioned and initilized. `run-dbconfigs` workflow initilized the postgres db and redis. `run-esconfigs` workflow initilizes elasticsearch.
+ 2. All of the `deploy-` worflows and the `run-manifest` can be run concurently to deploy the microservices comprising this application.
+
+### Deploying Services Manually
 This component depends on 3 services:
  - Redis: facilitates comunication between microservices
  - PostgreSQL: stores json formated configuration data for the system
@@ -33,6 +54,12 @@ cf create-service aws-elasticache-redis redis-dev sk-redis
 cf create-service aws-rds medium-psql sk-postgres
 cf create-service aws-elasticsearch es-dev sk-elasticsearch
 ```
+
+### Networking
+
+The api, portal and sdk microservice need public routes.
+
+The http connector microservice need network access to any other http GIVE microservices deployed in the cloud enviroment it will be using for flows.
 
 ## Accessing Services
 

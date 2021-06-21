@@ -51,6 +51,9 @@ jobs:
           echo "::set-output name=SPACE::$target_environment"
           echo "Deploying to $target_environment"
 
+      - name: Ensure Elasticsearch Available
+        run: .cloud-gov/ensure_service_available.sh aws-elasticsearch es-dev sk-elasticsearch
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

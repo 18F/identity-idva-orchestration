@@ -51,6 +51,12 @@ jobs:
           echo "::set-output name=SPACE::$target_environment"
           echo "Deploying to $target_environment"
 
+      - name: Ensure Redis Available
+        run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
+
+      - name: Ensure Postgres Available
+        run: .cloud-gov/ensure_service_available.sh -c aws-rds medium-psql sk-postgres
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

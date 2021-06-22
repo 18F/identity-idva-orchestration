@@ -3,5 +3,5 @@ version: 1
 applications:
 - name: sk-portal
   routes:
-    - route: ((SK_PORTAL_ROUTE))
+    - route: identity-give-sk-portal-((ENVIRONMENT_NAME)).apps.internal
   memory: 64M

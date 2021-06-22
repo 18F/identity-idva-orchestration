@@ -82,6 +82,7 @@ jobs:
           echo "$SK_SECRETS" | jq empty
           echo "---" > vars.yaml
           echo "SK_SECRETS: |" >> vars.yaml
+          # sed formats yaml value with proper indentation
           echo "$SK_SECRETS" | sed 's/^/  /' >> vars.yaml
 
       - name: Deploy application

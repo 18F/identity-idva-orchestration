@@ -40,15 +40,18 @@ jobs:
           if [[ $GITHUB_REF == "refs/heads/main" ]]; then
               # Pushes to main are deployed to dev
               target_environment=give-dev
+              environment_name=dev
           elif [[ $GITHUB_REF =~ refs/tags/* ]]; then
               # Tags on main are deployed to test
               target_environment=give-test
+              environment_name=test
           else
               echo 'Unknown deployment target'
               exit 1
           fi
           # Set the outputs for this step
           echo "::set-output name=SPACE::$target_environment"
+          echo "::set-output name=ENVIRONMENT_NAME::$environment_name"
           echo "Deploying to $target_environment"
 
       - name: Configure AWS credentials
@@ -65,4 +68,4 @@ jobs:
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
           cd sk-sdk
-          cf push --var SK_SDK_ROUTE=${{ secrets.SK_SDK_ROUTE }} --strategy rolling
+          cf push --var ENVIRONMENT_NAME=${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }} --strategy rolling

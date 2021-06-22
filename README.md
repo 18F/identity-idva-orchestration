@@ -39,7 +39,7 @@ These microservices provides connectors that can be used in flows.
 
 ## Deploying the Application
 
-The github actions workflows are used to provision the services and deploy the applications.
+The github actions workflows are used to provision the services and deploy the applications. They should be run in the following sequence:
  1. First the three services need to be provisioned and initialized. `run-dbconfigs` workflow initializes the postgres db and redis. `run-esconfigs` workflow initializes elasticsearch.
  2. All of the `deploy-` workflows and the `run-manifest` can be run concurrently to deploy the microservices comprising this application.
 

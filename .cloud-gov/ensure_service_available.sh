@@ -1,18 +1,6 @@
 #!/bin/bash
 
-should_create=true
-
-while getopt "c" option; do
-    case ${option} in
-        c )
-            should_create=false
-            ;;
-    esac
-done
-
-shift $((OPTIND-1))
-
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -n "$4" ]; then
+usage() {
     cat << EOF
 Usage
         $0 [-c] CF_SERVICE_NAME SERVICE PLAN
@@ -30,6 +18,26 @@ Options
 Examples
         ensure_service_available my-app-db aws-rds micro-psql
 EOF
+}
+
+should_create=true
+
+while getopts "c" option; do
+    case ${option} in
+        c )
+            should_create=false
+            ;;
+        * )
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -n "$4" ]; then
+    usage
     exit 1
 fi
 

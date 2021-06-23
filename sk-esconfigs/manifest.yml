@@ -2,6 +2,7 @@
 version: 1
 applications:
 - name: sk-esconfigs
+  memory: 1M
   processes:
   - type: task
     memory: 128M

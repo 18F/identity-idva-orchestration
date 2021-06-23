@@ -3,7 +3,7 @@
 usage() {
     cat << EOF
 Usage
-        $0 [-c] CF_SERVICE_NAME SERVICE PLAN
+        $0 [-c] SERVICE PLAN SERVICE_INSTANCE_NAME
 
 Description
         This script checks for the existance of the specified service and optionally creates it if it does not exist.
@@ -16,7 +16,7 @@ Options
             Check for service only. Do NOT create service if it does not exist.
 
 Examples
-        ensure_service_available my-app-db aws-rds micro-psql
+        ensure_service_available aws-rds micro-psql my-app-db
 EOF
 }
 
@@ -41,9 +41,9 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -n "$4" ]; then
     exit 1
 fi
 
-cf_service_name="$1"
-cf_service="$2"
-cf_service_plan="$3"
+cf_service="$1"
+cf_service_plan="$2"
+cf_service_name="$3"
 
 success_status_regex="(create|update) succeeded"
 

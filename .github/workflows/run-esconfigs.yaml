@@ -1,7 +1,7 @@
 ---
-# This workflow will run deploy the oe microservice
+# This workflow will run the esconfigs app initilize elasticsearch
 
-name: Deploy oe
+name: Run esconfigs
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-oe/**'
-      - '.github/workflows/deploy-oe.yaml'
+      - 'sk-esconfigs/**'
+      - '.github/workflows/run-esconfigs.yaml'
 
 jobs:
   deploy:
@@ -51,11 +51,8 @@ jobs:
           echo "::set-output name=SPACE::$target_environment"
           echo "Deploying to $target_environment"
 
-      - name: Ensure Redis Available
-        run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
-
-      - name: Ensure Postgres Available
-        run: .cloud-gov/ensure_service_available.sh -c aws-rds medium-psql sk-postgres
+      - name: Ensure Elasticsearch Available
+        run: .cloud-gov/ensure_service_available.sh aws-elasticsearch es-dev sk-elasticsearch
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -65,15 +62,15 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/oe/$(cat sk-oe/version) sk-oe
+        run: aws s3 sync s3://com.singularkey.gsa/dev/elasticsearch-configs/$(cat sk-esconfigs/version) sk-esconfigs
 
       - name: Check hash
         run: |
-          cd sk-oe
+          cd sk-esconfigs
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-oe/sk-app
+        run: chmod +x sk-esconfigs/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         env:
@@ -88,5 +85,8 @@ jobs:
       - name: Deploy application
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-          cd sk-oe
-          cf push --vars-file ../vars.yaml --strategy rolling
+          cd sk-esconfigs
+          cf push --vars-file ../vars.yaml --task
+
+      - name: Run esconfigs task
+        run: cf run-task sk-esconfigs --name task

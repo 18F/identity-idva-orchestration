@@ -1,7 +1,7 @@
 ---
-# This workflow will run deploy the oe microservice
+# This workflow will run the db configs app to initilize postgres db
 
-name: Deploy oe
+name: Run db configs
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-oe/**'
-      - '.github/workflows/deploy-oe.yaml'
+      - 'sk-dbconfigs/**'
+      - '.github/workflows/run-dbconfigs.yaml'
 
 jobs:
   deploy:
@@ -51,11 +51,11 @@ jobs:
           echo "::set-output name=SPACE::$target_environment"
           echo "Deploying to $target_environment"
 
-      - name: Ensure Redis Available
-        run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
-
       - name: Ensure Postgres Available
-        run: .cloud-gov/ensure_service_available.sh -c aws-rds medium-psql sk-postgres
+        run: .cloud-gov/ensure_service_available.sh aws-rds medium-psql sk-postgres
+
+      - name: Ensure Redis Available
+        run: .cloud-gov/ensure_service_available.sh aws-elasticache-redis redis-dev sk-redis
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -65,15 +65,15 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/oe/$(cat sk-oe/version) sk-oe
+        run: aws s3 sync s3://com.singularkey.gsa/dev/database-configs/$(cat sk-dbconfigs/version) sk-dbconfigs
 
       - name: Check hash
         run: |
-          cd sk-oe
+          cd sk-dbconfigs
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-oe/sk-app
+        run: chmod +x sk-dbconfigs/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         env:
@@ -88,5 +88,8 @@ jobs:
       - name: Deploy application
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-          cd sk-oe
-          cf push --vars-file ../vars.yaml --strategy rolling
+          cd sk-dbconfigs
+          cf push --vars-file ../vars.yaml --task
+
+      - name: Run dbconfigs task
+        run: cf run-task sk-dbconfigs --name task

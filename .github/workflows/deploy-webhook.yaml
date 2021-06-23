@@ -1,7 +1,7 @@
 ---
-# This workflow will run deploy the oe microservice
+# This workflow will deploy the webhook microservice
 
-name: Deploy oe
+name: Deploy webhook
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-oe/**'
-      - '.github/workflows/deploy-oe.yaml'
+      - 'sk-webhook/**'
+      - '.github/workflows/deploy-webhook.yaml'
 
 jobs:
   deploy:
@@ -65,15 +65,15 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/oe/$(cat sk-oe/version) sk-oe
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-webhook/$(cat sk-webhook/version) sk-webhook
 
       - name: Check hash
         run: |
-          cd sk-oe
+          cd sk-webhook
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-oe/sk-app
+        run: chmod +x sk-webhook/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         env:
@@ -88,5 +88,5 @@ jobs:
       - name: Deploy application
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-          cd sk-oe
+          cd sk-webhook
           cf push --vars-file ../vars.yaml --strategy rolling

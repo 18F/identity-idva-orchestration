@@ -1,7 +1,7 @@
 ---
-# This workflow will run deploy the oe microservice
+# This workflow will deploy the analytics microservice
 
-name: Deploy oe
+name: Deploy analytics
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-oe/**'
-      - '.github/workflows/deploy-oe.yaml'
+      - 'sk-analytics/**'
+      - '.github/workflows/deploy-analytics.yaml'
 
 jobs:
   deploy:
@@ -65,15 +65,15 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/oe/$(cat sk-oe/version) sk-oe
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-analytics/$(cat sk-analytics/version) sk-analytics
 
       - name: Check hash
         run: |
-          cd sk-oe
+          cd sk-analytics
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-oe/sk-app
+        run: chmod +x sk-analytics/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         env:
@@ -88,5 +88,5 @@ jobs:
       - name: Deploy application
         run: |
           cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-          cd sk-oe
+          cd sk-analytics
           cf push --vars-file ../vars.yaml --strategy rolling

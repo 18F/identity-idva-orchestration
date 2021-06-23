@@ -54,6 +54,9 @@ jobs:
           echo "::set-output name=ENVIRONMENT_NAME::$environment_name"
           echo "Deploying to $target_environment"
 
+      - name: Set CF CLI Target
+        run: cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
+
       - name: Ensure Redis Available
         run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
 
@@ -90,6 +93,5 @@ jobs:
 
       - name: Deploy application
         run: |
-          cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
           cd sk-api
           cf push --vars-file ../vars.yaml --var ENVIRONMENT_NAME=${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }} --strategy rolling

@@ -51,6 +51,9 @@ jobs:
           echo "::set-output name=SPACE::$target_environment"
           echo "Deploying to $target_environment"
 
+      - name: Set CF CLI Target
+        run: cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
+
       - name: Ensure Postgres Available
         run: .cloud-gov/ensure_service_available.sh aws-rds medium-psql sk-postgres
 
@@ -87,7 +90,6 @@ jobs:
 
       - name: Deploy application
         run: |
-          cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
           cd sk-dbconfigs
           cf push --vars-file ../vars.yaml --task
 

@@ -24,6 +24,7 @@ These microservices provides connectors that can be used in flows.
  - analytics
  - challenge
  - credential
+ - ews
  - fido
  - flow
  - functions
@@ -31,6 +32,7 @@ These microservices provides connectors that can be used in flows.
  - iovation
  - jumio
  - openid
+ - node
  - totp
  - transunion
  - userpolicy

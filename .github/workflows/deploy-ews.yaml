@@ -1,0 +1,94 @@
+---
+# This workflow will deploy the ews microservice
+
+name: Deploy ews
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+    paths:
+      - 'sk-ews/**'
+      - '.github/workflows/deploy-ews.yaml'
+
+jobs:
+  deploy:
+    if: github.repository_owner == '18F'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install CloudFoundry CLI
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v7&source=github" | sudo tar -zx --directory=/usr/local/bin
+          cf --version
+
+      - name: Setup CF CLI auth
+        run: |
+          cf api https://api.fr.cloud.gov
+          cf auth ${{ secrets.CF_USERNAME }} ${{ secrets.CF_PASSWORD }}
+
+      - name: Determine deployment target
+        id: deployment-target
+        env:
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          # Use the Github reference to determine environment values
+          if [[ $GITHUB_REF == "refs/heads/main" ]]; then
+              # Pushes to main are deployed to dev
+              target_environment=give-dev
+          elif [[ $GITHUB_REF =~ refs/tags/* ]]; then
+              # Tags on main are deployed to test
+              target_environment=give-test
+          else
+              echo 'Unknown deployment target'
+              exit 1
+          fi
+          # Set the outputs for this step
+          echo "::set-output name=SPACE::$target_environment"
+          echo "Deploying to $target_environment"
+
+      - name: Set CF CLI Target
+        run: cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
+
+      - name: Ensure Redis Available
+        run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
+
+      - name: Ensure Postgres Available
+        run: .cloud-gov/ensure_service_available.sh -c aws-rds medium-psql sk-postgres
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Download app file with AWS CLI
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-ews/$(cat sk-ews/version) sk-ews
+
+      - name: Check hash
+        run: |
+          cd sk-ews
+          sha256sum -c hash
+
+      - name: Make Executable
+        run: chmod +x sk-ews/sk-app
+
+      - name: Write SingularKey secrets to CF vars file
+        env:
+          SK_SECRETS: ${{ secrets.SK_SECRETS }}
+        run: |
+          echo "$SK_SECRETS" | jq empty
+          echo "---" > vars.yaml
+          echo "SK_SECRETS: |" >> vars.yaml
+          # sed formats yaml value with proper indentation
+          echo "$SK_SECRETS" | sed 's/^/  /' >> vars.yaml
+
+      - name: Deploy application
+        run: |
+          cd sk-ews
+          cf push --vars-file ../vars.yaml --strategy rolling

@@ -92,8 +92,3 @@ jobs:
         run: |
           cd sk-http
           cf push --vars-file ../vars.yaml --strategy rolling
-
-      - name: Apply CF Network Policies
-        run: |
-          cf add-network-policy sk-http usps
-          cf add-network-policy sk-http usaccess

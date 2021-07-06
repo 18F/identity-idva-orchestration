@@ -65,9 +65,11 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/sk-portal/ sk-portal/portal
+        run: aws s3 sync "s3://com.singularkey.gsa/dev/sk-portal/$(cat sk-portal/version)" sk-portal/
 
       - name: Deploy application
         run: |
           cd sk-portal
+          #Replace the api endpoint url with the correct one for the environment
+          find . -type f -exec sed -i 's/skdevapi/give-api-${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }}/g' {} +
           cf push --var ENVIRONMENT_NAME=${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }} --strategy rolling

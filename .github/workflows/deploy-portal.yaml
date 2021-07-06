@@ -70,5 +70,6 @@ jobs:
       - name: Deploy application
         run: |
           cd sk-portal
+          #Replace the api endpoint url with the correct one for the environment
           find . -type f -exec sed -i 's/skdevapi/give-api-${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }}/g' {} +
           cf push --var ENVIRONMENT_NAME=${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }} --strategy rolling

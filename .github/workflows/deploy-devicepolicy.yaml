@@ -1,7 +1,7 @@
 ---
-# This workflow will deploy the transunion microservice
+# This workflow will deploy the devicepolicy microservice
 
-name: Deploy transunion
+name: Deploy devicepolicy
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
     tags:
       - '*'
     paths:
-      - 'sk-transunion/**'
-      - '.github/workflows/deploy-transunion.yaml'
+      - 'sk-devicepolicy/**'
+      - '.github/workflows/deploy-devicepolicy.yaml'
 
 jobs:
   deploy:
@@ -70,15 +70,15 @@ jobs:
           aws-region: us-west-2
 
       - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-transunion/$(cat sk-transunion/version) sk-transunion
+        run: aws s3 sync s3://com.singularkey.gsa/dev/microservice-devicepolicy/$(cat sk-devicepolicy/version) sk-devicepolicy
 
       - name: Check hash
         run: |
-          cd sk-transunion
+          cd sk-devicepolicy
           sha256sum -c hash
 
       - name: Make Executable
-        run: chmod +x sk-transunion/sk-app
+        run: chmod +x sk-devicepolicy/sk-app
 
       - name: Write SingularKey secrets to CF vars file
         env:
@@ -92,5 +92,5 @@ jobs:
 
       - name: Deploy application
         run: |
-          cd sk-transunion
+          cd sk-devicepolicy
           cf push --vars-file ../vars.yaml --strategy rolling

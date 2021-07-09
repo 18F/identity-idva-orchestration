@@ -40,9 +40,11 @@ jobs:
           if [[ $GITHUB_REF == "refs/heads/main" ]]; then
               # Pushes to main are deployed to dev
               target_environment=give-dev
+              echo "SK_SECRETS_NAME=SK_SECRETS_DEV" >> $GITHUB_ENV
           elif [[ $GITHUB_REF =~ refs/tags/* ]]; then
               # Tags on main are deployed to test
               target_environment=give-test
+              echo "SK_SECRETS_NAME=SK_SECRETS_TEST" >> $GITHUB_ENV
           else
               echo 'Unknown deployment target'
               exit 1
@@ -80,7 +82,7 @@ jobs:
 
       - name: Write SingularKey secrets to CF vars file
         env:
-          SK_SECRETS: ${{ secrets.SK_SECRETS }}
+          SK_SECRETS: ${{ secrets[env.SK_SECRETS_NAME] }}
         run: |
           echo "$SK_SECRETS" | jq empty
           echo "---" > vars.yaml

@@ -5,3 +5,4 @@ applications:
     routes:
       - route: identity-give-sk-sdk-((ENVIRONMENT_NAME)).apps.internal
     memory: 64M
+    instances: 2

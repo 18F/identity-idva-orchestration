@@ -3,7 +3,7 @@ version: 1
 applications:
   - name: sk-http
     memory: 128M
-    instances: 1
+    instances: 2
     no-route: true
     buildpacks:
       - binary_buildpack

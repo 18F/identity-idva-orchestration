@@ -1,7 +1,8 @@
 ---
 version: 1
 applications:
-- name: sk-sdk
-  routes:
-    - route: identity-give-sk-sdk-((ENVIRONMENT_NAME)).apps.internal
-  memory: 64M
+  - name: sk-sdk
+    routes:
+      - route: identity-give-sk-sdk-((ENVIRONMENT_NAME)).apps.internal
+    memory: 64M
+    instances: 2

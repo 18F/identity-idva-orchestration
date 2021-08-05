@@ -1,17 +1,17 @@
 ---
 version: 1
 applications:
-- name: sk-dbconfigs
-  memory: 1M
-  processes:
-  - type: task
-    memory: 128M
-    instances: 1
-    command: ./sk-app
-  no-route: true
-  buildpacks:
-   - binary_buildpack
-  services:
-    - sk-postgres
-  env:
-    SK_SECRETS: ((SK_SECRETS))
+  - name: sk-dbconfigs
+    memory: 1M
+    processes:
+      - type: task
+        memory: 128M
+        instances: 1
+        command: ./sk-app
+    no-route: true
+    buildpacks:
+      - binary_buildpack
+    services:
+      - sk-postgres
+    env:
+      SK_SECRETS: ((SK_SECRETS))

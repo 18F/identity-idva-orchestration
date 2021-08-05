@@ -1,15 +1,15 @@
 ---
 version: 1
 applications:
-- name: sk-ews
-  memory: 128M
-  instances: 1
-  no-route: true
-  buildpacks:
-   - binary_buildpack
-  command: ./sk-app
-  services:
-    - sk-redis
-    - sk-postgres
-  env:
-    SK_SECRETS: ((SK_SECRETS))
+  - name: sk-ews
+    memory: 128M
+    instances: 1
+    no-route: true
+    buildpacks:
+      - binary_buildpack
+    command: ./sk-app
+    services:
+      - sk-redis
+      - sk-postgres
+    env:
+      SK_SECRETS: ((SK_SECRETS))

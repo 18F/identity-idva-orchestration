@@ -50,8 +50,4 @@ jobs:
           s3-url: "s3://com.singularkey.gsa/dev/microservice-analytics"
           app-directory: "sk-analytics"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
-
-      - name: Deploy application
-        run: |
-          cd sk-analytics
-          cf push --vars-file vars.yaml --strategy rolling
+          standard-deployment: "true"

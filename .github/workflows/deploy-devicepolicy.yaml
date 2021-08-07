@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-devicepolicy/**'
       - '.github/workflows/deploy-devicepolicy.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

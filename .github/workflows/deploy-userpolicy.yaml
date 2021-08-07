@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-userpolicy/**'
       - '.github/workflows/deploy-userpolicy.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

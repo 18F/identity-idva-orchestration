@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-functions/**'
       - '.github/workflows/deploy-functions.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

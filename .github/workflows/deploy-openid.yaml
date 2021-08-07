@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-openid/**'
       - '.github/workflows/deploy-openid.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

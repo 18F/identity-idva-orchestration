@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-manifest/**'
       - '.github/workflows/run-manifest.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

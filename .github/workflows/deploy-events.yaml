@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-events/**'
       - '.github/workflows/deploy-events.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

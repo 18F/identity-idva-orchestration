@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-transunion/**'
       - '.github/workflows/deploy-transunion.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

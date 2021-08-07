@@ -30,11 +30,6 @@ jobs:
           cf-password: ${{ secrets.CF_PASSWORD }}
           cf-org: ${{ secrets.CF_ORG }}
 
-      - name: Set SK Secrets Name
-        run: |
-          target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
-          echo "SK_SECRETS_NAME=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
-
       - name: Ensure Redis Available
         run: .cloud-gov/ensure_service_available.sh -c aws-elasticache-redis redis-dev sk-redis
 
@@ -58,6 +53,11 @@ jobs:
 
       - name: Make Executable
         run: chmod +x sk-analytics/sk-app
+
+      - name: Set SK Secrets Name
+        run: |
+          target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
+          echo "SK_SECRETS_NAME=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
       - name: Write SingularKey secrets to CF vars file
         env:

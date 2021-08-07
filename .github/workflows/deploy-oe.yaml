@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-oe/**'
       - '.github/workflows/deploy-oe.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

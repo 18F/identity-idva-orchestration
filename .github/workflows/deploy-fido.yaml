@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-fido/**'
       - '.github/workflows/deploy-fido.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

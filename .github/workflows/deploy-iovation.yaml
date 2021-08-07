@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-iovation/**'
       - '.github/workflows/deploy-iovation.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

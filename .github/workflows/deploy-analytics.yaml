@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-analytics/**'
       - '.github/workflows/deploy-analytics.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

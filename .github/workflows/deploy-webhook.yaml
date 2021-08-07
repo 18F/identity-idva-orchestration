@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-webhook/**'
       - '.github/workflows/deploy-webhook.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

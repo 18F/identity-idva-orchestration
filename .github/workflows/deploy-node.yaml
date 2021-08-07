@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-node/**'
       - '.github/workflows/deploy-node.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

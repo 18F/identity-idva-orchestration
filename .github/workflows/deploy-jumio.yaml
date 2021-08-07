@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-jumio/**'
       - '.github/workflows/deploy-jumio.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

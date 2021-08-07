@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-dbconfigs/**'
       - '.github/workflows/run-dbconfigs.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

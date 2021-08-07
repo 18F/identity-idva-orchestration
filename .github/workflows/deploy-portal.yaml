@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-portal/**'
       - '.github/workflows/deploy-portal.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

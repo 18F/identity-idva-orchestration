@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-mfacontainer/**'
       - '.github/workflows/deploy-mfacontainer.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

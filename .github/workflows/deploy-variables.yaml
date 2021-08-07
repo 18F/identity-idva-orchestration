@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-variables/**'
       - '.github/workflows/deploy-variables.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

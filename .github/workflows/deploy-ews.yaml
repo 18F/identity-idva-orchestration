@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-ews/**'
       - '.github/workflows/deploy-ews.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

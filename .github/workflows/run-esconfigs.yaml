@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-esconfigs/**'
       - '.github/workflows/run-esconfigs.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:

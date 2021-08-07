@@ -23,20 +23,30 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: 18F/identity-give-sk-setup@v1
-        id: sk-setup
+      - uses: 18F/identity-give-cf-setup@v2
+        id: cf-setup
         with:
           cf-username: ${{ secrets.CF_USERNAME }}
           cf-password: ${{ secrets.CF_PASSWORD }}
           cf-org: ${{ secrets.CF_ORG }}
+
+      - name: Set SK Secrets
+        run: |
+          target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
+          echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
+
+      - uses: 18F/identity-give-sk-setup@v1
+        id: sk-setup
+        with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           require-redis: "true"
           require-postgres: "true"
           s3-url: "s3://com.singularkey.gsa/dev/microservice-analytics"
           app-directory: "sk-analytics"
+          sk-secrets: ${{ secrets[env.SK_SECRETS] }}
 
       - name: Deploy application
         run: |
           cd sk-analytics
-          cf push --vars-file ../vars.yaml --strategy rolling
+          cf push --vars-file vars.yaml --strategy rolling

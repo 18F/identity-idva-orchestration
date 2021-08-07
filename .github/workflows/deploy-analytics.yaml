@@ -29,8 +29,8 @@ jobs:
           cf-username: ${{ secrets.CF_USERNAME }}
           cf-password: ${{ secrets.CF_PASSWORD }}
           cf-org: ${{ secrets.CF_ORG }}
-          aws-access-key-id: ${{}}
-          aws-secret-access-key: ${{}}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           require-redis: "true"
           require-postgres: "true"
           s3-url: "s3://com.singularkey.gsa/dev/microservice-analytics"

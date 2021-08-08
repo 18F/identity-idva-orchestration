@@ -54,4 +54,4 @@ jobs:
       - name: Deploy application
         run: |
           cd sk-api
-          cf push --vars-file vars.yaml --var ENVIRONMENT_NAME=${{ steps.deployment-target.outputs.ENVIRONMENT_NAME }} --strategy rolling
+          cf push --vars-file vars.yaml --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling

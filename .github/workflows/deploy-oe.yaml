@@ -50,4 +50,12 @@ jobs:
           s3-url: "s3://com.singularkey.gsa/dev/oe"
           app-directory: "sk-oe"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
-          standard-deployment: "true"
+
+      - name: Perform Deployment
+        run: |
+          cd ${{ inputs.app-directory }}
+          if [[ ${{ steps.cf-setup.outputs.target-environment }} == "prod" ]]; then
+            cf push --vars-file vars.yaml --strategy rolling --instances 4
+          else
+            cf push --vars-file vars.yaml --strategy rolling
+          fi

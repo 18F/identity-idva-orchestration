@@ -47,6 +47,7 @@ jobs:
         with:
           require-redis: "true"
           require-postgres: "true"
+          create-required-services: "true"
           s3-url: "s3://com.singularkey.gsa/dev/database-configs"
           app-directory: "sk-dbconfigs"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}

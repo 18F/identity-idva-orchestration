@@ -46,6 +46,7 @@ jobs:
         id: sk-setup
         with:
           require-elasticsearch: "true"
+          create-required-services: "true"
           s3-url: "s3://com.singularkey.gsa/dev/elasticsearch-configs"
           app-directory: "sk-esconfigs"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}

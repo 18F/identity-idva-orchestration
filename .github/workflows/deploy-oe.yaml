@@ -53,7 +53,7 @@ jobs:
 
       - name: Perform Deployment
         run: |
-          cd ${{ inputs.app-directory }}
+          cd sk-oe/
           if [[ ${{ steps.cf-setup.outputs.target-environment }} == "prod" ]]; then
             cf push --vars-file vars.yaml --strategy rolling --instances 4
           else

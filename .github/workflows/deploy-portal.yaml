@@ -53,6 +53,7 @@ jobs:
         run: |
           cd sk-portal
           tar -xf build.tar.gz
+          cd build
           #Replace the api endpoint url with the correct one for the environment
           find . -type f -exec sed -i 's/skdevapi/give-api-${{ steps.cf-setup.outputs.target-environment }}/g' {} +
           cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling

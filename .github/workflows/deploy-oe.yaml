@@ -55,7 +55,7 @@ jobs:
         run: |
           cd sk-oe/
           if [[ ${{ steps.cf-setup.outputs.target-environment }} == "prod" ]]; then
-            cf push --vars-file vars.yaml --strategy rolling --instances 4
+            cf push --vars-file vars.yaml --strategy rolling --instances 4 --app-start-timeout 600
           else
-            cf push --vars-file vars.yaml --strategy rolling
+            cf push --vars-file vars.yaml --strategy rolling --app-start-timeout 600
           fi

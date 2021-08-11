@@ -48,6 +48,7 @@ jobs:
           s3-url: "s3://com.singularkey.gsa/dev/sk-portal"
           app-directory: "sk-portal"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
+          disable-executable: "true"
 
       - name: Deploy application
         run: |

@@ -1,17 +1,17 @@
 ---
 version: 1
 applications:
-- name: sk-events
-  memory: 256M
-  instances: 2
-  buildpacks:
-    - binary_buildpack
-  command: ./sk-app
-  health-check-type: process
-  no-route: true
-  services:
-    - sk-postgres
-    - sk-redis
-    - sk-elasticsearch
-  env:
-    SK_SECRETS: ((SK_SECRETS))
+  - name: sk-events
+    memory: 256M
+    instances: 2
+    buildpacks:
+      - binary_buildpack
+    command: ./sk-app
+    health-check-type: process
+    no-route: true
+    services:
+      - sk-postgres
+      - sk-redis
+      - sk-elasticsearch
+    env:
+      SK_SECRETS: ((SK_SECRETS))

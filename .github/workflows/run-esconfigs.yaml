@@ -13,6 +13,8 @@ on:
     paths:
       - 'sk-esconfigs/**'
       - '.github/workflows/run-esconfigs.yaml'
+  release:
+    types: [released]
 
 jobs:
   deploy:
@@ -21,43 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install CloudFoundry CLI
-        run: |
-          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v7&source=github" | sudo tar -zx --directory=/usr/local/bin
-          cf --version
-
-      - name: Setup CF CLI auth
-        run: |
-          cf api https://api.fr.cloud.gov
-          cf auth ${{ secrets.CF_USERNAME }} ${{ secrets.CF_PASSWORD }}
-
-      - name: Determine deployment target
-        id: deployment-target
-        env:
-          GITHUB_REF: ${{ github.ref }}
-        run: |
-          # Use the Github reference to determine environment values
-          if [[ $GITHUB_REF == "refs/heads/main" ]]; then
-              # Pushes to main are deployed to dev
-              target_environment=give-dev
-              echo "SK_SECRETS_NAME=SK_SECRETS_DEV" >> $GITHUB_ENV
-          elif [[ $GITHUB_REF =~ refs/tags/* ]]; then
-              # Tags on main are deployed to test
-              target_environment=give-test
-              echo "SK_SECRETS_NAME=SK_SECRETS_TEST" >> $GITHUB_ENV
-          else
-              echo 'Unknown deployment target'
-              exit 1
-          fi
-          # Set the outputs for this step
-          echo "::set-output name=SPACE::$target_environment"
-          echo "Deploying to $target_environment"
-
-      - name: Set CF CLI Target
-        run: cf target -o ${{ secrets.CF_ORG }} -s ${{ steps.deployment-target.outputs.SPACE }}
-
-      - name: Ensure Elasticsearch Available
-        run: .cloud-gov/ensure_service_available.sh aws-elasticsearch es-dev sk-elasticsearch
+      - uses: 18F/identity-give-cf-setup@v2
+        id: cf-setup
+        with:
+          cf-username: ${{ secrets.CF_USERNAME }}
+          cf-password: ${{ secrets.CF_PASSWORD }}
+          cf-org: ${{ secrets.CF_ORG }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -66,31 +37,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Download app file with AWS CLI
-        run: aws s3 sync s3://com.singularkey.gsa/dev/elasticsearch-configs/$(cat sk-esconfigs/version) sk-esconfigs
-
-      - name: Check hash
+      - name: Set SK Secrets
         run: |
-          cd sk-esconfigs
-          sha256sum -c hash
+          target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
+          echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - name: Make Executable
-        run: chmod +x sk-esconfigs/sk-app
-
-      - name: Write SingularKey secrets to CF vars file
-        env:
-          SK_SECRETS: ${{ secrets[env.SK_SECRETS_NAME] }}
-        run: |
-          echo "$SK_SECRETS" | jq empty
-          echo "---" > vars.yaml
-          echo "SK_SECRETS: |" >> vars.yaml
-          # sed formats yaml value with proper indentation
-          echo "$SK_SECRETS" | sed 's/^/  /' >> vars.yaml
+      - uses: 18F/identity-give-sk-setup@v1
+        id: sk-setup
+        with:
+          require-elasticsearch: "true"
+          create-required-services: "true"
+          s3-url: "s3://com.singularkey.gsa/dev/elasticsearch-configs"
+          app-directory: "sk-esconfigs"
+          sk-secrets: ${{ secrets[env.SK_SECRETS] }}
 
       - name: Deploy application
         run: |
           cd sk-esconfigs
-          cf push --vars-file ../vars.yaml --task
+          cf push --vars-file vars.yaml --task
 
       - name: Run esconfigs task
         run: cf run-task sk-esconfigs --name task

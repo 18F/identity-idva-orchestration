@@ -1,5 +1,5 @@
-# identity-give-orchestration
-Orchestration component of GIVE
+# identity-idva-orchestration
+Orchestration component of IDVA
 
 
 ## Microservices
@@ -61,7 +61,7 @@ cf create-service aws-elasticsearch es-dev sk-elasticsearch
 
 The api, portal and sdk microservice need to be externally routable.
 
-The http connector microservice need network access to any other http GIVE microservices deployed in the cloud environment it will be using for flows.
+The http connector microservice need network access to any other http IDVA microservices deployed in the cloud environment it will be using for flows.
 
 ## Accessing Services
 

@@ -8,7 +8,7 @@ applications:
       - binary_buildpack
     command: ./sk-app
     routes:
-      - route: identity-give-sk-api-((ENVIRONMENT_NAME)).apps.internal
+      - route: identity-idva-sk-api-((ENVIRONMENT_NAME)).apps.internal
     services:
       - sk-postgres
       - sk-redis

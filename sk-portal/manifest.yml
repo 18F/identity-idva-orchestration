@@ -3,6 +3,6 @@ version: 1
 applications:
   - name: sk-portal
     routes:
-      - route: identity-give-sk-portal-((ENVIRONMENT_NAME)).apps.internal
+      - route: idva-portal-((ENVIRONMENT_NAME)).app.cloud.gov
     memory: 64M
     instances: 2

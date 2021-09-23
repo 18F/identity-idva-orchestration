@@ -2,11 +2,14 @@
 version: 1
 applications:
   - name: sk-api
-    memory: 256M
+    memory: 512M
     instances: 2
     buildpacks:
-      - binary_buildpack
-    command: ./sk-app
+      - nginx_buildpack
+    sidecars:
+      - name: app
+        process_types: [ 'web' ]
+        command: ./sk-app
     routes:
       - route: identity-idva-sk-api-((ENVIRONMENT_NAME)).apps.internal
     services:

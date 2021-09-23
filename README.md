@@ -24,6 +24,7 @@ These microservices provides connectors that can be used in flows.
  - analytics
  - challenge
  - credential
+ - devicepolicy
  - ews
  - fido
  - flow
@@ -31,14 +32,15 @@ These microservices provides connectors that can be used in flows.
  - http
  - iovation
  - jumio
- - openid
+ - mfacontainer
  - node
+ - openid
  - totp
  - transunion
  - userpolicy
  - variables
  - webhook
-
+ 
 ## Deploying the Application
 
 The github actions workflows are used to provision the services and deploy the applications. They should be run in the following sequence:

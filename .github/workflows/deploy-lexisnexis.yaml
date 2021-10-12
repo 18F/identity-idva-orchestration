@@ -1,0 +1,27 @@
+---
+# This workflow will deploy the LexisNexis microservice
+
+name: Deploy LexisNexis
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+    paths:
+      - 'sk-lexisnexis/**'
+      - '.github/workflows/deploy-lexisnexis.yaml'
+  release:
+    types: [released]
+
+jobs:
+  deploy:
+    if: github.repository_owner == '18F'
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy.yaml@main
+    with:
+      require-redis: "true"
+      require-postgres: "true"
+      s3-url: "s3://com.singularkey.gsa/dev/microservice-lexisnexis"
+      standard-deployment: "true"

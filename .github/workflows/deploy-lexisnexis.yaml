@@ -24,4 +24,5 @@ jobs:
       require-redis: "true"
       require-postgres: "true"
       s3-url: "s3://com.singularkey.gsa/dev/microservice-lexisnexis"
+      app-directory: "sk-lexisnexis"
       standard-deployment: "true"

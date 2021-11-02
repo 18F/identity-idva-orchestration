@@ -1,7 +1,7 @@
 ---
 # This workflow will deploy the LexisNexis microservice
 
-name: Deploy LexisNexis
+name: Deploy lexisnexis
 
 on:
   workflow_dispatch:

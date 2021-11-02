@@ -86,7 +86,7 @@ Connecting to the cloud.gov Elasticsearch instances requires sending aws v4 sing
 cf ssh -T -L 8443:<elasticsearch hostname>:443 sk-events
 ```
 ```
-awscurl --region <region> --service es --access_key <access key> --secret_key <secret> -H 'host: <elasticsearch hostname>'  -X GET 'https://localhost:8443/_cat/indices?v'
+awscurl --region <region> --service es --access_key <access key> --secret_key <secret> -k -H 'host: <elasticsearch hostname>' -X GET 'https://localhost:8443/_cat/indices?v'
 ```
 
 ### Postgres

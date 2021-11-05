@@ -83,14 +83,10 @@ redis-cli -h localhost -p <port> -a <password> --tls
 Connecting to the cloud.gov Elasticsearch instances requires sending aws v4 singed headers. A utility such as [awscurl](https://github.com/okigan/awscurl) can be used to send signed requests rest requests to the elasticsearch api.
 
 ```
-cf ssh -T -L 443:<elasticsearch hostname>:443 sk-events
+cf ssh -T -L 8443:<elasticsearch hostname>:443 sk-events
 ```
 ```
-awscurl --region <region> --service es --access_key <access key> --secret_key <secret> -X GET 'https://<elasticsearch hostname>/_cat/indices?v'
-```
-It is necessary to add a host file entry for the Elasticsearch hostname in order for the signatures to be calculated correctly.
-```
-127.0.0.1 ....es.amazonaws.com
+awscurl --region <region> --service es --access_key <access key> --secret_key <secret> -k -H 'host: <elasticsearch hostname>' -X GET 'https://localhost:8443/_cat/indices?v'
 ```
 
 ### Postgres

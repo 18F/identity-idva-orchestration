@@ -1,0 +1,54 @@
+---
+# This workflow will run deploy the events read microservice
+
+name: Deploy events read
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+    paths:
+      - 'sk-events-read/**'
+      - '.github/workflows/deploy-events-read.yaml'
+  release:
+    types: [released]
+
+jobs:
+  deploy:
+    if: github.repository_owner == '18F'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: 18F/identity-idva-cf-setup@v2
+        id: cf-setup
+        with:
+          cf-username: ${{ secrets.CF_USERNAME }}
+          cf-password: ${{ secrets.CF_PASSWORD }}
+          cf-org: ${{ secrets.CF_ORG }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Set SK Secrets
+        run: |
+          target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
+          echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
+
+      - uses: 18F/identity-idva-sk-setup@v1
+        id: sk-setup
+        with:
+          require-redis: "true"
+          require-postgres: "true"
+          require-elasticsearch: "true"
+          s3-url: "s3://com.singularkey.gsa/dev/microservice-events-read"
+          app-directory: "sk-events-read"
+          sk-secrets: ${{ secrets[env.SK_SECRETS] }}
+          standard-deployment: "true"

@@ -1,0 +1,81 @@
+#This workflow update the hashes for new µservice versions
+
+name: Update Hashes
+
+on:
+  push:
+    paths:
+      - '**version'
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Download app file with AWS CLI
+        env:
+          AWS_S3_PATH: ${{ secrets.AWS_S3_PATH }}
+        run: aws s3 sync --exclude "*" --include "*hash" "s3://$AWS_S3_PATH/dev/" ../s3
+
+      - name: Update Hashes
+        run: |
+          declare -A services=( 
+          ["sk-analytics"]="microservice-analytics"
+          ["sk-api"]="api"
+          ["sk-challenge"]="microservice-challenge"
+          ["sk-credential"]="microservice-credential"
+          ["sk-dbconfigs"]="database-configs"
+          ["sk-devicepolicy"]="microservice-devicepolicy"
+          ["sk-esconfigs"]="elasticsearch-configs"
+          ["sk-events"]="microservice-events"
+          ["sk-events-read"]="microservice-events-read"
+          ["sk-ews"]="microservice-ews"
+          ["sk-fido"]="microservice-fido"
+          ["sk-flow"]="microservice-flow"
+          ["sk-functions"]="microservice-functions"
+          ["sk-http"]="microservice-http"
+          ["sk-iovation"]="microservice-iovation"
+          ["sk-jumio"]="microservice-jumio"
+          ["sk-lexisnexis"]="microservice-lexisnexis"
+          ["sk-manifest"]="manifest"
+          ["sk-mfacontainer"]="microservice-mfacontainer"
+          ["sk-node"]="microservice-node"
+          ["sk-oe"]="oe"
+          ["sk-openid"]="microservice-openid"
+          ["sk-portal"]="sk-portal"
+          ["sk-sdk"]="sk-sdk"
+          ["sk-totp"]="microservice-totp"
+          ["sk-transunion"]="microservice-transunion"
+          ["sk-userpolicy"]="microservice-userpolicy"
+          ["sk-variables"]="microservice-variables"
+          ["sk-webhook"]="microservice-webhook"
+          )
+
+          for item in "${!services[@]}"
+          do
+            current=$(cat "$item/version")
+            mv "../s3/${services[$item]}/$current/hash" "$item/hash"
+          done
+
+      - uses: crazy-max/ghaction-import-gpg@v4.1.0
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: commit updates
+        run: |
+          git config --global user.name 'idva-bot'
+          git config --global user.email 'idva@gsa.gov'
+          git add .
+          git commit -am "Update Hashes"
+          git push

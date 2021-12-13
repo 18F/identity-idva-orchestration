@@ -4,6 +4,8 @@ name: Update Hashes
 
 on:
   push:
+    branches-ignore:
+      - main
     paths:
       - '**version'
 

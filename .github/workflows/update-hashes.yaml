@@ -10,7 +10,7 @@ on:
       - '**version'
 
 jobs:
-  report:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Download app file with AWS CLI
+      - name: Download hash files with AWS CLI
         env:
           AWS_S3_PATH: ${{ secrets.AWS_S3_PATH }}
         run: aws s3 sync --exclude "*" --include "*hash" "s3://$AWS_S3_PATH/dev/" ../s3

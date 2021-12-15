@@ -1,0 +1,128 @@
+---
+name: 'SK Setup'
+
+description: |
+  Performs the deployment steps common to all SK microservices within IDVA.
+
+inputs:
+  require-redis:
+    description: 'Boolean indicating whether to ensure sk-redis is available before deployment.'
+    required: false
+    default: false
+
+  require-postgres:
+    description: 'Boolean indicating whether to ensure sk-postgres is available before deployment.'
+    required: false
+    default: false
+
+  require-elasticsearch:
+    description: 'Boolean indicating whether to ensure sk-elasticsearch is available before deployment.'
+    required: false
+    default: false
+
+  create-required-services:
+    description: 'Boolean indicating whether required services should be created if they dont yet exist.'
+    required: false
+    default: false
+
+  s3-url:
+    description: 'The S3 URL for the SK app files'
+    required: true
+
+  app-directory:
+    description: 'The directory containing the files relevant to the microservice being deployed.'
+    required: true
+
+  sk-secrets:
+    description: 'The SK secrets used during the vars file generation.'
+    required: true
+
+  standard-deployment:
+    description: 'Perform a standard "cf push --vars-file vars.yaml --strategy rolling"'
+    required: false
+    default: false
+
+  target-environment:
+    description: 'String indicating the targeted space (dev/test/prod).'
+    required: false
+    default: dev
+
+  disable-executable:
+    description: 'Boolean indicating whether to disable adding executable permissions to downloaded binaries.'
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Ensure Services Available
+      shell: bash
+      run: |
+        redis_instance_size="redis-dev"
+        elasticsearch_instance_size="es-dev"
+
+        # Production environment is assigned different service plans
+        if [[ ${{ inputs.target-environment }} == "prod" ]]; then
+          redis_instance_size="redis-3node"
+          elasticsearch_instance_size="es-medium"
+        fi
+
+        # Determine whether to create the service or just check for availability
+        service_available_options='-c'
+        if [[ ${{ inputs.create-required-services }} == "true" ]]; then
+          service_available_options='' # Do not pass '-c' (create-only) flag
+        fi
+
+        echo "::group::Ensure Services Available"
+
+        if [[ ${{ inputs.require-redis }} == "true" ]]; then
+          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-elasticache-redis "$redis_instance_size" sk-redis
+        fi
+
+        if [[ ${{ inputs.require-postgres }} == "true" ]]; then
+          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-rds medium-psql sk-postgres
+        fi
+
+        if [[ ${{ inputs.require-elasticsearch }} == "true" ]]; then
+          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-elasticsearch "$elasticsearch_instance_size" sk-elasticsearch
+        fi
+
+        echo "::endgroup::"
+
+    - name: Download app file with AWS CLI
+      shell: bash
+      run: |
+        app_version=$(cat ${{ inputs.app-directory }}/version)
+        full_s3_url="${{ inputs.s3-url }}/$app_version"
+        aws s3 sync --only-show-errors "$full_s3_url" ${{ inputs.app-directory }}
+
+    - name: Validate downloaded binary
+      shell: bash
+      run: |
+        cd ${{ inputs.app-directory }}
+        sha256sum -c hash
+        if [[ ! ${{ inputs.disable-executable }} == "true" ]]; then
+          chmod +x sk-app
+        fi
+
+    - name: Write SingularKey secrets to CF vars file
+      env:
+        SK_SECRETS: ${{ inputs.sk-secrets }}
+      shell: bash
+      run: |
+        # Ensure the secret is valid JSON
+        echo "$SK_SECRETS" | jq empty
+        {
+          echo "---"
+          echo "SK_SECRETS: |"
+          # sed formats yaml value with proper indentation
+          echo "$SK_SECRETS" | sed 's/^/  /'
+        } > ${{ inputs.app-directory }}/vars.yaml
+
+    - name: Perform Standard Deployment
+      shell: bash
+      run: |
+        if [[ ${{ inputs.standard-deployment }} == "true" ]]; then
+          cd ${{ inputs.app-directory }}
+          cf push --vars-file vars.yaml --strategy rolling
+        fi

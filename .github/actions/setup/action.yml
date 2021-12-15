@@ -94,7 +94,7 @@ runs:
       run: |
         app_version=$(cat ${{ inputs.app-directory }}/version)
         full_s3_url="${{ inputs.s3-url }}/$app_version"
-        aws s3 sync --only-show-errors "$full_s3_url" ${{ inputs.app-directory }}
+        aws s3 sync --only-show-errors --exclude "hash" "$full_s3_url" ${{ inputs.app-directory }}
 
     - name: Validate downloaded binary
       shell: bash

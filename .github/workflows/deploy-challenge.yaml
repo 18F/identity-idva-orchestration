@@ -5,16 +5,13 @@ name: Deploy challenge
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-challenge/**'
       - '.github/workflows/deploy-challenge.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

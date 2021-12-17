@@ -5,16 +5,13 @@ name: Deploy lexisnexis
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-lexisnexis/**'
       - '.github/workflows/deploy-lexisnexis.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

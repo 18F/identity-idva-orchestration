@@ -5,16 +5,13 @@ name: Deploy events
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-events/**'
       - '.github/workflows/deploy-events.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

@@ -5,16 +5,13 @@ name: Deploy flow
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-flow/**'
       - '.github/workflows/deploy-flow.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

@@ -5,16 +5,13 @@ name: Run esconfigs
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-esconfigs/**'
       - '.github/workflows/run-esconfigs.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

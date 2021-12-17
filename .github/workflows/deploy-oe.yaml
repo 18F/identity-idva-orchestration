@@ -5,16 +5,13 @@ name: Deploy oe
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-oe/**'
       - '.github/workflows/deploy-oe.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

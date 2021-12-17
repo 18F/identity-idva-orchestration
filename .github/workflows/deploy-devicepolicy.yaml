@@ -5,16 +5,13 @@ name: Deploy devicepolicy
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-devicepolicy/**'
       - '.github/workflows/deploy-devicepolicy.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

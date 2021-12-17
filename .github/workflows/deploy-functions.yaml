@@ -5,16 +5,13 @@ name: Deploy functions
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-functions/**'
       - '.github/workflows/deploy-functions.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

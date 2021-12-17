@@ -5,16 +5,13 @@ name: Deploy http
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-http/**'
       - '.github/workflows/deploy-http.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

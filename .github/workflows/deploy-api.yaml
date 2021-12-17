@@ -5,16 +5,13 @@ name: Deploy api
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-api/**'
       - '.github/workflows/deploy-api.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

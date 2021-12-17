@@ -5,16 +5,13 @@ name: Deploy webhook
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-webhook/**'
       - '.github/workflows/deploy-webhook.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

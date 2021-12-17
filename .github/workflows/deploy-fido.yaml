@@ -5,16 +5,13 @@ name: Deploy fido
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-fido/**'
       - '.github/workflows/deploy-fido.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

@@ -5,16 +5,13 @@ name: Run db configs
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-dbconfigs/**'
       - '.github/workflows/run-dbconfigs.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:

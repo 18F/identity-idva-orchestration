@@ -126,3 +126,8 @@ runs:
           cd ${{ inputs.app-directory }}
           cf push --vars-file vars.yaml --strategy rolling
         fi
+
+    - name: Delete deployment on error
+      shell: bash
+      if: ${{ failure() || cancelled()}}
+      run: cf cancel-deployment ${{ inputs.app-directory }}

@@ -39,7 +39,7 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - uses: ./.github/actions/setup@main
+      - uses: ./.github/actions/setup
         id: sk-setup
         with:
           require-elasticsearch: "true"

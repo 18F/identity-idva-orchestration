@@ -39,7 +39,7 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - uses: ./.github/actions/setup@main
+      - uses: ./.github/actions/setup
         id: sk-setup
         with:
           s3-url: "s3://com.singularkey.gsa/dev/sk-portal"

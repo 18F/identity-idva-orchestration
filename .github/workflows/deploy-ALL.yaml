@@ -1,0 +1,125 @@
+---
+# This workflow will deploy ALL
+
+name: Deploy ALL
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  run-esconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-esconfigs.yaml@main
+  
+  run-dbconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-dbconfigs.yaml@main
+  
+  run-manifest:
+    needs: run-dbconfigs
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-manifest.yaml@main
+
+  deploy-analytics:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-analytics.yaml@main
+
+  deploy-api:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-api.yaml@main
+
+  deploy-challenge:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-challenge.yaml@main
+
+  deploy-credential:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-credential.yaml@main
+
+  deploy-devicepolicy:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-devicepolicy.yaml@main
+
+  deploy-events:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events.yaml@main
+
+  deploy-events-read:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events-read.yaml@main
+
+  deploy-ews:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-ews.yaml@main
+
+  deploy-fido:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-fido.yaml@main
+
+  deploy-flow:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-flow.yaml@main
+
+  deploy-functions:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-functions.yaml@main
+
+  deploy-http:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-http.yaml@main
+
+  deploy-iovation:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-iovation.yaml@main
+
+  deploy-jumio:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-jumio.yaml@main
+
+  deploy-lexisnexis:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-lexisnexis.yaml@main
+
+  deploy-mfacontainer:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-mfacontainer.yaml@main
+
+  deploy-node:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-node.yaml@main
+
+  deploy-oe:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-oe.yaml@main
+
+  deploy-openid:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-openid.yaml@main
+
+  deploy-portal:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-portal.yaml@main
+
+  deploy-sdk:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-sdk.yaml@main
+
+  deploy-totp:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-totp.yaml@main
+
+  deploy-transunion:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-transunion.yaml@main
+
+  deploy-userpolicy:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-userpolicy.yaml@main
+
+  deploy-variables:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-variables.yaml@main
+
+  deploy-webhook:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-webhook.yaml@main

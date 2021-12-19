@@ -20,7 +20,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          check-name: run-manifest
+          check-regexp: (run-manifest|run-dbconfigs)
+          wait-interval: 20
 
   deploy-jumio:
     needs: run-manifest-check

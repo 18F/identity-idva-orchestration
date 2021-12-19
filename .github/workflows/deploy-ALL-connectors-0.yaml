@@ -12,7 +12,7 @@ on:
     types: [released]
 
 jobs:
-  run-manifest-check:
+  base-check:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for run-manifest in deploy ALL to finish
@@ -24,7 +24,7 @@ jobs:
           wait-interval: 20
 
   deploy-analytics:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-analytics.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -37,7 +37,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-challenge:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-challenge.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -50,7 +50,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-credential:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-credential.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -63,7 +63,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-devicepolicy:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-devicepolicy.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -76,7 +76,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-ews:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-ews.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -89,7 +89,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-fido:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-fido.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -102,7 +102,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-flow:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-flow.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -115,7 +115,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-functions:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-functions.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -128,7 +128,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-http:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-http.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}
@@ -141,7 +141,7 @@ jobs:
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-iovation:
-    needs: run-manifest-check
+    needs: base-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-iovation.yaml@main
     secrets:
       CF_USERNAME: ${{ secrets.CF_USERNAME }}

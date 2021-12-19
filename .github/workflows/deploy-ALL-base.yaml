@@ -1,0 +1,45 @@
+---
+# This workflow will deploy ALL
+
+name: Deploy ALL
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  run-esconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-esconfigs.yaml@main
+  
+  run-dbconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-dbconfigs.yaml@main
+  
+  run-manifest:
+    needs: run-dbconfigs
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-manifest.yaml@main
+
+  deploy-api:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-api.yaml@main
+
+  deploy-events:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events.yaml@main
+
+  deploy-events-read:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events-read.yaml@main
+
+  deploy-oe:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-oe.yaml@main
+
+  deploy-portal:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-portal.yaml@main
+
+  deploy-sdk:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-sdk.yaml@main

@@ -16,6 +16,7 @@ on:
 jobs:
   deploy:
     if: github.repository_owner == '18F'
+    name: run-manifest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -47,10 +48,3 @@ jobs:
           app-directory: "sk-manifest"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
 
-      - name: Deploy application
-        run: |
-          cd sk-manifest
-          cf push --vars-file vars.yaml --task
-
-      - name: Run manifest task
-        run: cf run-task sk-manifest --name task

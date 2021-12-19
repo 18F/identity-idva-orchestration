@@ -1,0 +1,62 @@
+---
+# This workflow will help deploy ALL
+
+name: Deploy ALL connectors 0
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  run-manifest-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for run-manifest in deploy ALL to finish
+        uses: lewagon/wait-on-check-action@v1.1.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: run-manifest
+
+  deploy-analytics:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-analytics.yaml@main
+
+  deploy-challenge:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-challenge.yaml@main
+
+  deploy-credential:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-credential.yaml@main
+
+  deploy-devicepolicy:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-devicepolicy.yaml@main
+
+  deploy-ews:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-ews.yaml@main
+
+  deploy-fido:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-fido.yaml@main
+
+  deploy-flow:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-flow.yaml@main
+
+  deploy-functions:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-functions.yaml@main
+
+  deploy-http:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-http.yaml@main
+
+  deploy-iovation:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-iovation.yaml@main

@@ -1,0 +1,62 @@
+---
+# This workflow will deploy ALL2
+
+name: Deploy ALL connectors 1
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  run-manifest-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for run-manifest in deploy ALL to finish
+        uses: lewagon/wait-on-check-action@v1.1.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: run-manifest
+
+  deploy-jumio:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-jumio.yaml@main
+
+  deploy-lexisnexis:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-lexisnexis.yaml@main
+
+  deploy-mfacontainer:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-mfacontainer.yaml@main
+
+  deploy-node:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-node.yaml@main
+
+  deploy-openid:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-openid.yaml@main
+
+  deploy-totp:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-totp.yaml@main
+
+  deploy-transunion:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-transunion.yaml@main
+
+  deploy-userpolicy:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-userpolicy.yaml@main
+
+  deploy-variables:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-variables.yaml@main
+
+  deploy-webhook:
+    needs: run-manifest-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-webhook.yaml@main

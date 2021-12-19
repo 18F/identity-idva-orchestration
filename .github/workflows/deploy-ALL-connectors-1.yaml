@@ -24,39 +24,129 @@ jobs:
   deploy-jumio:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-jumio.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-lexisnexis:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-lexisnexis.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-mfacontainer:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-mfacontainer.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-node:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-node.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-openid:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-openid.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-totp:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-totp.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-transunion:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-transunion.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-userpolicy:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-userpolicy.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-variables:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-variables.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
   deploy-webhook:
     needs: run-manifest-check
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-webhook.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}

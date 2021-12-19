@@ -6,6 +6,15 @@ name: Deploy ews
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      CF_USERNAME:
+      CF_PASSWORD:
+      CF_ORG:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SK_SECRETS_DEV:
+      SK_SECRETS_TEST:
+      SK_SECRETS_PROD:
   push:
     branches:
       - main

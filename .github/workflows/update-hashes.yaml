@@ -54,6 +54,7 @@ jobs:
           ["sk-openid"]="microservice-openid"
           ["sk-portal"]="sk-portal"
           ["sk-sdk"]="sk-sdk"
+          ["sk-smtp"]="microservice-smtp"
           ["sk-totp"]="microservice-totp"
           ["sk-transunion"]="microservice-transunion"
           ["sk-userpolicy"]="microservice-userpolicy"

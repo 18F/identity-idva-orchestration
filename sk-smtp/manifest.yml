@@ -1,7 +1,7 @@
 ---
 version: 1
 applications:
-  - name: sk-lexisnexis
+  - name: sk-smtp
     memory: 128M
     instances: 2
     no-route: true
@@ -12,6 +12,5 @@ applications:
     services:
       - sk-redis
       - sk-postgres
-      - sk-s3
     env:
       SK_SECRETS: ((SK_SECRETS))

@@ -15,5 +15,6 @@ applications:
     services:
       - sk-postgres
       - sk-redis
+      - sk-s3
     env:
       SK_SECRETS: ((SK_SECRETS))

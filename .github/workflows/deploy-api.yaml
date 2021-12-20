@@ -61,6 +61,7 @@ jobs:
         with:
           require-redis: "true"
           require-postgres: "true"
+          require-s3: "true"
           s3-url: "s3://com.singularkey.gsa/dev/api"
           app-directory: "sk-api"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}

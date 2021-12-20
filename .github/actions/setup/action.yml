@@ -20,6 +20,11 @@ inputs:
     required: false
     default: false
 
+  require-s3:
+    description: 'Boolean indicating whether to ensure sk-s3 is available before deployment.'
+    required: false
+    default: false
+
   create-required-services:
     description: 'Boolean indicating whether required services should be created if they dont yet exist.'
     required: false
@@ -85,6 +90,10 @@ runs:
 
         if [[ ${{ inputs.require-elasticsearch }} == "true" ]]; then
           ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-elasticsearch "$elasticsearch_instance_size" sk-elasticsearch
+        fi
+
+        if [[ ${{ inputs.require-s3 }} == "true" ]]; then
+          ${{ github.action_path }}/ensure_service_available.sh $service_available_options s3 basic-sandbox sk-s3
         fi
 
         echo "::endgroup::"

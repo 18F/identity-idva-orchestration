@@ -61,6 +61,7 @@ jobs:
         with:
           require-redis: "true"
           require-postgres: "true"
+          require-s3: "true"
           s3-url: "s3://com.singularkey.gsa/dev/microservice-lexisnexis"
           app-directory: "sk-lexisnexis"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}

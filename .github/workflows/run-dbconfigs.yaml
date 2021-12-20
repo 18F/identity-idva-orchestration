@@ -66,3 +66,11 @@ jobs:
           s3-url: "s3://com.singularkey.gsa/dev/database-configs"
           app-directory: "sk-dbconfigs"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
+
+      - name: Deploy application
+        run: |
+          cd sk-dbconfigs
+          cf push --vars-file vars.yaml --task
+
+      - name: Run dbconfigs task
+        run: cf run-task sk-dbconfigs --name task

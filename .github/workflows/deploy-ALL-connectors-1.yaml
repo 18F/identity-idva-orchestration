@@ -1,5 +1,5 @@
 ---
-# This workflow will deploy ALL2
+# This workflow will help deploy ALL
 
 name: Deploy ALL connectors 1
 

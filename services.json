@@ -1,68 +1,38 @@
 {
-    "dev": {
-        "s3": {
-            "name": "sk-s3",
-            "service": "s3",
-            "plan": "basic-sandbox"
-        },
-        "es": {
-            "name": "sk-elasticsearch",
-            "service": "aws-elasticsearch",
-            "plan": "es-dev"
-        },
-        "db": {
-            "name": "sk-postgres",
-            "service": "aws-rds",
-            "plan": "medium-psql"
-        },
-        "redis": {
-            "name": "sk-redis",
-            "service": "aws-elasticache-redis",
-            "plan": "redis-dev"
+    "s3": {
+        "name": "sk-s3",
+        "service": "s3",
+        "plan": {
+            "dev": "basic-sandbox",
+            "test": "basic-sandbox",
+            "prod": "basic-sandbox"
         }
     },
-    "test": {
-        "s3": {
-            "name": "sk-s3",
-            "service": "s3",
-            "plan": "basic-sandbox"
-        },
-        "es": {
-            "name": "sk-elasticsearch",
-            "service": "aws-elasticsearch",
-            "plan": "es-dev"
-        },
-        "db": {
-            "name": "sk-postgres",
-            "service": "aws-rds",
-            "plan": "medium-psql"
-        },
-        "redis": {
-            "name": "sk-redis",
-            "service": "aws-elasticache-redis",
-            "plan": "redis-dev"
+    "es": {
+        "name": "sk-elasticsearch",
+        "service": "aws-elasticsearch",
+        "plan": {
+            "dev": "es-dev",
+            "test": "es-dev",
+            "prod": "es-medium"
         }
     },
-    "prod": {
-        "s3": {
-            "name": "sk-s3",
-            "service": "s3",
-            "plan": "basic-sandbox"
-        },
-        "es": {
-            "name": "sk-elasticsearch",
-            "service": "aws-elasticsearch",
-            "plan": "es-medium"
-        },
-        "db": {
-            "name": "sk-postgres",
-            "service": "aws-rds",
-            "plan": "medium-psql"
-        },
-        "redis": {
-            "name": "sk-redis",
-            "service": "aws-elasticache-redis",
-            "plan": "redis-3node"
+    "db": {
+        "name": "sk-postgres",
+        "service": "aws-rds",
+        "plan": {
+            "dev": "medium-psql",
+            "test": "medium-psql",
+            "prod": "medium-psql"
+        }
+    },
+    "redis": {
+        "name": "sk-redis",
+        "service": "aws-elasticache-redis",
+        "plan": {
+            "dev": "redis-dev",
+            "test": "redis-dev",
+            "prod": "redis-3node"
         }
     }
 }

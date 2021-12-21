@@ -34,7 +34,7 @@ jobs:
           for item in $(jq -r 'keys[]' applications.json)
           do
             current=$(cat "$item/version")
-            dir=$(jq -r --arg item "$item" '.[$item].src' applications.json)
+            dir=$(jq -r --arg item "$item" '.[$item].s3dir' applications.json)
             mv "../s3/$dir/$current/hash" "$item/hash"
           done
 

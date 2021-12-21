@@ -69,24 +69,22 @@ runs:
           svc_check_opts='' # Do not pass '-c' (check-only) flag
         fi
 
-        services=$(jq '.${{ inputs.target-environment }}' services.json)
-
         echo "::group::Ensure Services Available"
 
         if [[ ${{ inputs.require-redis }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(echo $services | jq -j '.redis | .service, " ", .plan, " ",  .name')
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.redis | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-postgres }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(echo $services | jq -j '.db | .service, " ", .plan, " ",  .name')
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.db | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-elasticsearch }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(echo $services | jq -j '.es | .service, " ", .plan, " ",  .name')
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.es | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-s3 }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(echo $services | jq -j '.s3 | .service, " ", .plan, " ",  .name')
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.s3 | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         echo "::endgroup::"

@@ -1,0 +1,92 @@
+{
+    "sk-analytics": {
+        "src": "microservice-analytics"
+    },
+    "sk-api": {
+        "src": "api"
+    },
+    "sk-challenge": {
+        "src": "microservice-challenge"
+    },
+    "sk-credential": {
+        "src": "microservice-credential"
+    },
+    "sk-dbconfigs": {
+        "src": "database-configs"
+    },
+    "sk-devicepolicy": {
+        "src": "microservice-devicepolicy"
+    },
+    "sk-esconfigs": {
+        "src": "elasticsearch-configs"
+    },
+    "sk-events": {
+        "src": "microservice-events"
+    },
+    "sk-events-read": {
+        "src": "microservice-events-read"
+    },
+    "sk-ews": {
+        "src": "microservice-ews"
+    },
+    "sk-fido": {
+        "src": "microservice-fido"
+    },
+    "sk-flow": {
+        "src": "microservice-flow"
+    },
+    "sk-functions": {
+        "src": "microservice-functions"
+    },
+    "sk-http": {
+        "src": "microservice-http"
+    },
+    "sk-iovation": {
+        "src": "microservice-iovation"
+    },
+    "sk-jumio": {
+        "src": "microservice-jumio"
+    },
+    "sk-lexisnexis": {
+        "src": "microservice-lexisnexis"
+    },
+    "sk-manifest": {
+        "src": "manifest"
+    },
+    "sk-mfacontainer": {
+        "src": "microservice-mfacontainer"
+    },
+    "sk-node": {
+        "src": "microservice-node"
+    },
+    "sk-oe": {
+        "src": "oe"
+    },
+    "sk-openid": {
+        "src": "microservice-openid"
+    },
+    "sk-portal": {
+        "src": "sk-portal"
+    },
+    "sk-sdk": {
+        "src": "sk-sdk"
+    },
+    "sk-smtp": {
+        "src": "microservice-smtp"
+    },
+    "sk-totp": {
+        "src": "microservice-totp"
+    },
+    "sk-transunion": {
+        "src": "microservice-transunion"
+    },
+    "sk-userpolicy": {
+        "src": "microservice-userpolicy"
+    },
+    "sk-variables": {
+        "src": "microservice-variables"
+    },
+    "sk-webhook": {
+        "src": "microservice-webhook"
+    }
+}

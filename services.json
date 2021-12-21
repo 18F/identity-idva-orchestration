@@ -1,0 +1,68 @@
+{
+    "dev": {
+        "s3": {
+            "name": "sk-s3",
+            "service": "s3",
+            "plan": "basic-sandbox"
+        },
+        "es": {
+            "name": "sk-elasticsearch",
+            "service": "aws-elasticsearch",
+            "plan": "es-dev"
+        },
+        "db": {
+            "name": "sk-postgres",
+            "service": "aws-rds",
+            "plan": "medium-psql"
+        },
+        "redis": {
+            "name": "sk-redis",
+            "service": "aws-elasticache-redis",
+            "plan": "redis-dev"
+        }
+    },
+    "test": {
+        "s3": {
+            "name": "sk-s3",
+            "service": "s3",
+            "plan": "basic-sandbox"
+        },
+        "es": {
+            "name": "sk-elasticsearch",
+            "service": "aws-elasticsearch",
+            "plan": "es-dev"
+        },
+        "db": {
+            "name": "sk-postgres",
+            "service": "aws-rds",
+            "plan": "medium-psql"
+        },
+        "redis": {
+            "name": "sk-redis",
+            "service": "aws-elasticache-redis",
+            "plan": "redis-dev"
+        }
+    },
+    "prod": {
+        "s3": {
+            "name": "sk-s3",
+            "service": "s3",
+            "plan": "basic-sandbox"
+        },
+        "es": {
+            "name": "sk-elasticsearch",
+            "service": "aws-elasticsearch",
+            "plan": "es-medium"
+        },
+        "db": {
+            "name": "sk-postgres",
+            "service": "aws-rds",
+            "plan": "medium-psql"
+        },
+        "redis": {
+            "name": "sk-redis",
+            "service": "aws-elasticache-redis",
+            "plan": "redis-3node"
+        }
+    }
+}

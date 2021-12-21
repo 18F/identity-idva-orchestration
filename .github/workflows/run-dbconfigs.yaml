@@ -5,20 +5,35 @@ name: Run db configs
 
 on:
   workflow_dispatch:
+  workflow_call:
+    secrets:
+      CF_USERNAME:
+        required: true
+      CF_PASSWORD:
+        required: true
+      CF_ORG:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      SK_SECRETS_DEV:
+        required: true
+      SK_SECRETS_TEST:
+        required: true
+      SK_SECRETS_PROD:
+        required: true
   push:
     branches:
       - main
-    tags:
-      - '*'
     paths:
       - 'sk-dbconfigs/**'
       - '.github/workflows/run-dbconfigs.yaml'
-  release:
-    types: [released]
 
 jobs:
   deploy:
     if: github.repository_owner == '18F'
+    name: run-dbconfigs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,11 +57,12 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - uses: 18F/identity-idva-orchestration/.github/actions/setup@main
+      - uses: ./.github/actions/setup
         id: sk-setup
         with:
           require-redis: "true"
           require-postgres: "true"
+          require-s3: "true"
           create-required-services: "true"
           s3-url: "s3://com.singularkey.gsa/dev/database-configs"
           app-directory: "sk-dbconfigs"

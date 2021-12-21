@@ -1,0 +1,154 @@
+---
+# This workflow will help deploy ALL
+
+name: Deploy ALL connectors 0
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  base-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for run-manifest in deploy ALL to finish
+        uses: lewagon/wait-on-check-action@v1.1.1
+        with:
+          ref: ${{ github.ref }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          check-regexp: (run-manifest|run-dbconfigs)
+          wait-interval: 20
+
+  deploy-analytics:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-analytics.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-challenge:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-challenge.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-credential:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-credential.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-devicepolicy:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-devicepolicy.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-ews:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-ews.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-fido:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-fido.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-flow:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-flow.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-functions:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-functions.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-http:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-http.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-iovation:
+    needs: base-check
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-iovation.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}

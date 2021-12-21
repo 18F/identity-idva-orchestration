@@ -1,0 +1,126 @@
+---
+# This workflow will deploy ALL
+
+name: Deploy ALL base
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [released]
+
+jobs:
+  run-esconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-esconfigs.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+  
+  run-dbconfigs:
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-dbconfigs.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+  
+  run-manifest:
+    needs: run-dbconfigs
+    uses: 18F/identity-idva-orchestration/.github/workflows/run-manifest.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-api:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-api.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-events:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-events-read:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-events-read.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-oe:
+    needs: run-manifest
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-oe.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-portal:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-portal.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
+  deploy-sdk:
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-sdk.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}

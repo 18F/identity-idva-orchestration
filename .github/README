@@ -16,4 +16,4 @@ This folder contains workflows for deploying and managing IDVA.
 
 The actions folder contains common actions used by the deployment workflows.
 
-- `setup` action performs the deployment steps common to all SK microservices within IDVA. 
+- `setup` action performs the deployment steps common to all SK microservices within IDVA.

@@ -1,0 +1,38 @@
+{
+    "s3": {
+        "name": "sk-s3",
+        "service": "s3",
+        "plan": {
+            "dev": "basic-sandbox",
+            "test": "basic-sandbox",
+            "prod": "basic-sandbox"
+        }
+    },
+    "es": {
+        "name": "sk-elasticsearch",
+        "service": "aws-elasticsearch",
+        "plan": {
+            "dev": "es-dev",
+            "test": "es-dev",
+            "prod": "es-medium"
+        }
+    },
+    "db": {
+        "name": "sk-postgres",
+        "service": "aws-rds",
+        "plan": {
+            "dev": "medium-psql",
+            "test": "medium-psql",
+            "prod": "medium-psql"
+        }
+    },
+    "redis": {
+        "name": "sk-redis",
+        "service": "aws-elasticache-redis",
+        "plan": {
+            "dev": "redis-dev",
+            "test": "redis-dev",
+            "prod": "redis-3node"
+        }
+    }
+}

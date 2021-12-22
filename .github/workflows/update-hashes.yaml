@@ -3,6 +3,7 @@
 name: Update Hashes
 
 on:
+  workflow_dispatch:
   push:
     branches-ignore:
       - main
@@ -29,43 +30,12 @@ jobs:
 
       - name: Update Hashes
         run: |
-          declare -A services=( 
-          ["sk-analytics"]="microservice-analytics"
-          ["sk-api"]="api"
-          ["sk-challenge"]="microservice-challenge"
-          ["sk-credential"]="microservice-credential"
-          ["sk-dbconfigs"]="database-configs"
-          ["sk-devicepolicy"]="microservice-devicepolicy"
-          ["sk-esconfigs"]="elasticsearch-configs"
-          ["sk-events"]="microservice-events"
-          ["sk-events-read"]="microservice-events-read"
-          ["sk-ews"]="microservice-ews"
-          ["sk-fido"]="microservice-fido"
-          ["sk-flow"]="microservice-flow"
-          ["sk-functions"]="microservice-functions"
-          ["sk-http"]="microservice-http"
-          ["sk-iovation"]="microservice-iovation"
-          ["sk-jumio"]="microservice-jumio"
-          ["sk-lexisnexis"]="microservice-lexisnexis"
-          ["sk-manifest"]="manifest"
-          ["sk-mfacontainer"]="microservice-mfacontainer"
-          ["sk-node"]="microservice-node"
-          ["sk-oe"]="oe"
-          ["sk-openid"]="microservice-openid"
-          ["sk-portal"]="sk-portal"
-          ["sk-sdk"]="sk-sdk"
-          ["sk-smtp"]="microservice-smtp"
-          ["sk-totp"]="microservice-totp"
-          ["sk-transunion"]="microservice-transunion"
-          ["sk-userpolicy"]="microservice-userpolicy"
-          ["sk-variables"]="microservice-variables"
-          ["sk-webhook"]="microservice-webhook"
-          )
-
-          for item in "${!services[@]}"
+          set -x
+          for item in $(jq -r 'keys[]' applications.json)
           do
             current=$(cat "$item/version")
-            mv "../s3/${services[$item]}/$current/hash" "$item/hash"
+            dir=$(jq -r --arg item "$item" '.[$item].s3dir' applications.json)
+            mv "../s3/$dir/$current/hash" "$item/hash"
           done
 
       - uses: crazy-max/ghaction-import-gpg@v4.1.0

@@ -1,0 +1,92 @@
+{
+    "sk-analytics": {
+        "s3dir": "microservice-analytics"
+    },
+    "sk-api": {
+        "s3dir": "api"
+    },
+    "sk-challenge": {
+        "s3dir": "microservice-challenge"
+    },
+    "sk-credential": {
+        "s3dir": "microservice-credential"
+    },
+    "sk-dbconfigs": {
+        "s3dir": "database-configs"
+    },
+    "sk-devicepolicy": {
+        "s3dir": "microservice-devicepolicy"
+    },
+    "sk-esconfigs": {
+        "s3dir": "elasticsearch-configs"
+    },
+    "sk-events": {
+        "s3dir": "microservice-events"
+    },
+    "sk-events-read": {
+        "s3dir": "microservice-events-read"
+    },
+    "sk-ews": {
+        "s3dir": "microservice-ews"
+    },
+    "sk-fido": {
+        "s3dir": "microservice-fido"
+    },
+    "sk-flow": {
+        "s3dir": "microservice-flow"
+    },
+    "sk-functions": {
+        "s3dir": "microservice-functions"
+    },
+    "sk-http": {
+        "s3dir": "microservice-http"
+    },
+    "sk-iovation": {
+        "s3dir": "microservice-iovation"
+    },
+    "sk-jumio": {
+        "s3dir": "microservice-jumio"
+    },
+    "sk-lexisnexis": {
+        "s3dir": "microservice-lexisnexis"
+    },
+    "sk-manifest": {
+        "s3dir": "manifest"
+    },
+    "sk-mfacontainer": {
+        "s3dir": "microservice-mfacontainer"
+    },
+    "sk-node": {
+        "s3dir": "microservice-node"
+    },
+    "sk-oe": {
+        "s3dir": "oe"
+    },
+    "sk-openid": {
+        "s3dir": "microservice-openid"
+    },
+    "sk-portal": {
+        "s3dir": "sk-portal"
+    },
+    "sk-sdk": {
+        "s3dir": "sk-sdk"
+    },
+    "sk-smtp": {
+        "s3dir": "microservice-smtp"
+    },
+    "sk-totp": {
+        "s3dir": "microservice-totp"
+    },
+    "sk-transunion": {
+        "s3dir": "microservice-transunion"
+    },
+    "sk-userpolicy": {
+        "s3dir": "microservice-userpolicy"
+    },
+    "sk-variables": {
+        "s3dir": "microservice-variables"
+    },
+    "sk-webhook": {
+        "s3dir": "microservice-webhook"
+    }
+}

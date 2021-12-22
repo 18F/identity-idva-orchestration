@@ -63,37 +63,28 @@ runs:
     - name: Ensure Services Available
       shell: bash
       run: |
-        redis_instance_size="redis-dev"
-        elasticsearch_instance_size="es-dev"
-
-        # Production environment is assigned different service plans
-        if [[ ${{ inputs.target-environment }} == "prod" ]]; then
-          redis_instance_size="redis-3node"
-          elasticsearch_instance_size="es-medium"
-        fi
-
         # Determine whether to create the service or just check for availability
-        service_available_options='-c'
+        svc_check_opts='-c'
         if [[ ${{ inputs.create-required-services }} == "true" ]]; then
-          service_available_options='' # Do not pass '-c' (create-only) flag
+          svc_check_opts='' # Do not pass '-c' (check-only) flag
         fi
 
         echo "::group::Ensure Services Available"
 
         if [[ ${{ inputs.require-redis }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-elasticache-redis "$redis_instance_size" sk-redis
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.redis | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-postgres }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-rds medium-psql sk-postgres
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.db | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-elasticsearch }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $service_available_options aws-elasticsearch "$elasticsearch_instance_size" sk-elasticsearch
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.es | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         if [[ ${{ inputs.require-s3 }} == "true" ]]; then
-          ${{ github.action_path }}/ensure_service_available.sh $service_available_options s3 basic-sandbox sk-s3
+          ${{ github.action_path }}/ensure_service_available.sh $svc_check_opts $(jq -j '.s3 | .service, " ", .plan.${{ inputs.target-environment }}, " ", .name' services.json)
         fi
 
         echo "::endgroup::"

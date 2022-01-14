@@ -4,11 +4,6 @@ name: Update Hashes
 
 on:
   workflow_dispatch:
-  push:
-    branches-ignore:
-      - main
-    paths:
-      - '**version'
 
 jobs:
   update:

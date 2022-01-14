@@ -72,4 +72,6 @@ jobs:
           # Execute a sed command on all files in the 'build' directory to
           # replace the api endpoint url with the correct one for the environment
           find ./build -type f -execdir sed -i 's/skdevapi/idva-api-${{ steps.cf-setup.outputs.target-environment }}/g' '{}' +
+          # replace sdk url
+          find ./build -type f -execdir sed -i 's/devsdk\.singularkey\.com/idva-sdk-${{ steps.cf-setup.outputs.target-environment }}\.app\.cloud\.gov/g' '{}' +
           cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling

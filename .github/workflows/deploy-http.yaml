@@ -65,6 +65,3 @@ jobs:
           app-directory: "sk-http"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
           standard-deployment: "true"
-
-      - name: Apply CF Network Policies
-        run: cf add-network-policy sk-http usps

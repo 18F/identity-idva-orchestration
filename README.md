@@ -10,7 +10,8 @@ The orchestration service consists of a set of microservices
  - api - The api service provides the api interface for the application and is the only service that is externally exposed.
  - portal - A static file app serving the admin portal React app
  - sdk - A static file app serving javascript sdk file
- - events - The event service records flow event data in elasticsearch
+ - events - The event service records flow event data in elasticsearch 
+ - events-read - Read event data
 
 #### Tasks ####
 
@@ -32,9 +33,12 @@ These microservices provides connectors that can be used in flows.
  - http
  - iovation
  - jumio
+ - lexisnexis
  - mfacontainer
  - node
  - openid
+ - smtp
+ - socure
  - totp
  - transunion
  - userpolicy

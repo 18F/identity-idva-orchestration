@@ -74,6 +74,9 @@
     "sk-smtp": {
         "s3dir": "microservice-smtp"
     },
+    "sk-socure": {
+        "s3dir": "microservice-socure"
+    },
     "sk-totp": {
         "s3dir": "microservice-totp"
     },

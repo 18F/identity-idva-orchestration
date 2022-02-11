@@ -10,7 +10,6 @@ applications:
       - binary_buildpack
     command: ./sk-app
     services:
-      - outbound-proxy
       - sk-redis
       - sk-postgres
     env:

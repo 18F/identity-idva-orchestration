@@ -23,6 +23,7 @@ The orchestration service consists of a set of microservices
 These microservices provides connectors that can be used in flows.
 
  - analytics
+ - authenticid
  - challenge
  - credential
  - devicepolicy
@@ -36,11 +37,13 @@ These microservices provides connectors that can be used in flows.
  - lexisnexis
  - mfacontainer
  - node
+ - onfido
  - openid
  - smtp
  - socure
  - totp
  - transunion
+ - transunion-tloxp
  - userpolicy
  - variables
  - webhook

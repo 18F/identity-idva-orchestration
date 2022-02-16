@@ -5,6 +5,9 @@
     "sk-api": {
         "s3dir": "api"
     },
+    "sk-authenticid": {
+        "s3dir": "microservice-authenticid"
+    },
     "sk-challenge": {
         "s3dir": "microservice-challenge"
     },
@@ -62,6 +65,9 @@
     "sk-oe": {
         "s3dir": "oe"
     },
+    "sk-onfido": {
+        "s3dir": "microservice-onfido"
+    },
     "sk-openid": {
         "s3dir": "microservice-openid"
     },
@@ -82,6 +88,9 @@
     },
     "sk-transunion": {
         "s3dir": "microservice-transunion"
+    },
+    "sk-transunion-tloxp": {
+        "s3dir": "microservice-transunion-tloxp"
     },
     "sk-userpolicy": {
         "s3dir": "microservice-userpolicy"

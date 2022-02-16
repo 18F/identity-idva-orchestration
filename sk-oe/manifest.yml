@@ -2,8 +2,8 @@
 version: 1
 applications:
   - name: sk-oe
-    memory: 256M
-    instances: 2
+    memory: ((MEMORY))
+    instances: ((INSTANCES))
     buildpacks:
       - binary_buildpack
     command: ./sk-app

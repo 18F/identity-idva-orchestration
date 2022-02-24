@@ -2,7 +2,7 @@
 version: 1
 applications:
   - name: sk-api
-    memory: 512M
+    memory: 1G
     instances: 2
     buildpacks:
       - nginx_buildpack

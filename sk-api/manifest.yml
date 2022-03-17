@@ -5,11 +5,8 @@ applications:
     memory: 1G
     instances: 2
     buildpacks:
-      - nginx_buildpack
-    sidecars:
-      - name: app
-        process_types: [ 'web' ]
-        command: ./sk-app
+      - binary_buildpack
+    command: ./sk-app
     routes:
       - route: identity-idva-sk-api-((ENVIRONMENT_NAME)).apps.internal
     services:

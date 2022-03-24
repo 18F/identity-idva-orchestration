@@ -12,5 +12,6 @@ applications:
     services:
       - sk-redis
       - sk-postgres
+      - sk-elasticsearch
     env:
       SK_SECRETS: ((SK_SECRETS))

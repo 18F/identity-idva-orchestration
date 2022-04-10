@@ -88,6 +88,19 @@ jobs:
       SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
       SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
 
+  deploy-analytics:
+    needs: [run-manifest, run-esconfigs]
+    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-analytics.yaml@main
+    secrets:
+      CF_USERNAME: ${{ secrets.CF_USERNAME }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+      CF_ORG: ${{ secrets.CF_ORG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
+      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
+      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+
   deploy-oe:
     needs: run-manifest
     uses: 18F/identity-idva-orchestration/.github/workflows/deploy-oe.yaml@main

@@ -1,4 +1,5 @@
 ---
+
 version: 1
 applications:
   - name: sk-http
@@ -12,5 +13,11 @@ applications:
     services:
       - sk-redis
       - sk-postgres
+    sidecars:
+      - name: local-proxy
+        process_types: ['web']
+        command: ./caddy run --config Caddyfile
     env:
       SK_SECRETS: ((SK_SECRETS))
+      HTTP_PROXY: http://localhost:9090
+      HTTPS_PROXY: http://localhost:9090

@@ -13,6 +13,7 @@ applications:
     services:
       - sk-redis
       - sk-postgres
+      - outbound-proxy
     sidecars:
       - name: local-proxy
         process_types: ['web']

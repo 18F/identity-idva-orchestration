@@ -60,7 +60,7 @@ jobs:
         working-directory: ./proxy
         run: |
           ./install_caddy.sh
-          mv caddy Caddyfile ../sk-smtp/
+          mv .profile caddy Caddyfile ../sk-smtp/
 
       - uses: ./.github/actions/setup
         id: sk-setup

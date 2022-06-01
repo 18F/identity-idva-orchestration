@@ -6,23 +6,6 @@ name: Deploy variables
 on:
   workflow_dispatch:
   workflow_call:
-    secrets:
-      CF_USERNAME:
-        required: true
-      CF_PASSWORD:
-        required: true
-      CF_ORG:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      SK_SECRETS_DEV:
-        required: true
-      SK_SECRETS_TEST:
-        required: true
-      SK_SECRETS_PROD:
-        required: true
   push:
     branches:
       - main

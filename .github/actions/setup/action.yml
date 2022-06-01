@@ -26,7 +26,7 @@ inputs:
     default: false
 
   create-required-services:
-    description: 'Boolean indicating whether required services should be created if they dont yet exist.'
+    description: 'Boolean indicating whether required services should be created if they do not yet exist.'
     required: false
     default: false
 

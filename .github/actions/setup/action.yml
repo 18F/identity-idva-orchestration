@@ -119,6 +119,10 @@ runs:
           echo "$SK_SECRETS" | sed 's/^/  /'
         } > ${{ inputs.app-directory }}/vars.yaml
 
+    - name: Copy common files
+      shell: bash
+      run: cp -an common/. ${{ inputs.app-directory }}/
+
     - name: Perform Standard Deployment
       shell: bash
       run: |

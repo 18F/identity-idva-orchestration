@@ -43,7 +43,7 @@ jobs:
         working-directory: ./proxy
         run: |
           ./install_caddy.sh
-          mv .profile caddy Caddyfile ../sk-lexisnexis/
+          mv caddy Caddyfile ../sk-lexisnexis/
 
       - uses: ./.github/actions/setup
         id: sk-setup

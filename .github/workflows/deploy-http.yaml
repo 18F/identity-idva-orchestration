@@ -6,27 +6,11 @@ name: Deploy http
 on:
   workflow_dispatch:
   workflow_call:
-    secrets:
-      CF_USERNAME:
-        required: true
-      CF_PASSWORD:
-        required: true
-      CF_ORG:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      SK_SECRETS_DEV:
-        required: true
-      SK_SECRETS_TEST:
-        required: true
-      SK_SECRETS_PROD:
-        required: true
   push:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-http/**'
       - '.github/workflows/deploy-http.yaml'
 
@@ -60,7 +44,7 @@ jobs:
         working-directory: ./proxy
         run: |
           ./install_caddy.sh
-          mv .profile caddy Caddyfile ../sk-http/
+          mv caddy Caddyfile ../sk-http/
 
       - uses: ./.github/actions/setup
         id: sk-setup

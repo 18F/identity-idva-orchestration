@@ -1,32 +1,16 @@
 ---
-# This workflow will run the esconfigs app initilize elasticsearch
+# This workflow will run the esconfigs app initialize elasticsearch
 
 name: Run esconfigs
 
 on:
   workflow_dispatch:
   workflow_call:
-    secrets:
-      CF_USERNAME:
-        required: true
-      CF_PASSWORD:
-        required: true
-      CF_ORG:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      SK_SECRETS_DEV:
-        required: true
-      SK_SECRETS_TEST:
-        required: true
-      SK_SECRETS_PROD:
-        required: true
   push:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-esconfigs/**'
       - '.github/workflows/run-esconfigs.yaml'
 

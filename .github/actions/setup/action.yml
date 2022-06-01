@@ -26,7 +26,7 @@ inputs:
     default: false
 
   create-required-services:
-    description: 'Boolean indicating whether required services should be created if they dont yet exist.'
+    description: 'Boolean indicating whether required services should be created if they do not yet exist.'
     required: false
     default: false
 
@@ -118,6 +118,10 @@ runs:
           # sed formats yaml value with proper indentation
           echo "$SK_SECRETS" | sed 's/^/  /'
         } > ${{ inputs.app-directory }}/vars.yaml
+
+    - name: Copy common files
+      shell: bash
+      run: cp -an common/. ${{ inputs.app-directory }}/
 
     - name: Perform Standard Deployment
       shell: bash

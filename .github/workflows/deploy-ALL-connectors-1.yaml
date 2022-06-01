@@ -25,182 +25,70 @@ jobs:
 
   deploy-jumio:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-jumio.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-jumio.yaml
+    secrets: inherit
 
   deploy-lexisnexis:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-lexisnexis.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-lexisnexis.yaml
+    secrets: inherit
 
   deploy-mfacontainer:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-mfacontainer.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-mfacontainer.yaml
+    secrets: inherit
 
   deploy-node:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-node.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-node.yaml
+    secrets: inherit
 
   deploy-onfido:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-onfido.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-onfido.yaml
+    secrets: inherit
 
   deploy-openid:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-openid.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-openid.yaml
+    secrets: inherit
 
   deploy-smtp:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-smtp.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-smtp.yaml
+    secrets: inherit
 
   deploy-socure:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-socure.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-socure.yaml
+    secrets: inherit
 
   deploy-totp:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-totp.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-totp.yaml
+    secrets: inherit
 
   deploy-transunion:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-transunion.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-transunion.yaml
+    secrets: inherit
 
   deploy-transunion-tloxp:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-transunion-tloxp.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-transunion-tloxp.yaml
+    secrets: inherit
 
   deploy-userpolicy:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-userpolicy.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-userpolicy.yaml
+    secrets: inherit
 
   deploy-variables:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-variables.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-variables.yaml
+    secrets: inherit
 
   deploy-webhook:
     needs: base-check
-    uses: 18F/identity-idva-orchestration/.github/workflows/deploy-webhook.yaml@main
-    secrets:
-      CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-      CF_ORG: ${{ secrets.CF_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SK_SECRETS_DEV: ${{ secrets.SK_SECRETS_DEV }}
-      SK_SECRETS_TEST: ${{ secrets.SK_SECRETS_TEST }}
-      SK_SECRETS_PROD: ${{ secrets.SK_SECRETS_PROD }}
+    uses: ./.github/workflows/deploy-webhook.yaml
+    secrets: inherit

@@ -19,5 +19,3 @@ applications:
         command: ./caddy run --config Caddyfile
     env:
       SK_SECRETS: ((SK_SECRETS))
-      HTTP_PROXY: http://localhost:9090
-      HTTPS_PROXY: http://localhost:9090

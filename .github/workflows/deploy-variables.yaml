@@ -10,6 +10,7 @@ on:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-variables/**'
       - '.github/workflows/deploy-variables.yaml'
 

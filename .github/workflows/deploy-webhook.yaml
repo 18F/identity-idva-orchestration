@@ -10,6 +10,7 @@ on:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-webhook/**'
       - '.github/workflows/deploy-webhook.yaml'
 

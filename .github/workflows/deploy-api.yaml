@@ -10,6 +10,7 @@ on:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-api/**'
       - '.github/workflows/deploy-api.yaml'
 

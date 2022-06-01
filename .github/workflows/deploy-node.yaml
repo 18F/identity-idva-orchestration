@@ -10,6 +10,7 @@ on:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-node/**'
       - '.github/workflows/deploy-node.yaml'
 

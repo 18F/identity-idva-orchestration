@@ -10,6 +10,7 @@ on:
     branches:
       - main
     paths:
+      - 'common/**'
       - 'sk-jumio/**'
       - '.github/workflows/deploy-jumio.yaml'
 

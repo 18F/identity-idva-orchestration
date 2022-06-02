@@ -46,10 +46,12 @@ jobs:
         with:
           s3-url: "s3://com.singularkey.gsa/dev/sk-sdk"
           app-directory: "sk-sdk"
-          sk-secrets: ${{ secrets[env.SK_SECRETS] }}
+          sk-secrets: "{}"
           disable-executable: "true"
 
       - name: Deploy application
         run: |
           cd sk-sdk
+          mkdir public
+          mv singularkey.js public/
           cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling

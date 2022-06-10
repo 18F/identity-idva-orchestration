@@ -13,10 +13,7 @@ applications:
     services:
       - sk-redis
       - sk-postgres
-      - outbound-proxy
-    sidecars:
-      - name: local-proxy
-        process_types: ['web']
-        command: ./caddy run --config Caddyfile
     env:
       SK_SECRETS: ((SK_SECRETS))
+      HTTPS_PROXY: http://outbound-proxy-((ENVIRONMENT)).apps.internal:8080
+      HTTP_PROXY: http://outbound-proxy-((ENVIRONMENT)).apps.internal:8080

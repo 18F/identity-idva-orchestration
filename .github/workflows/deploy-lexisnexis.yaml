@@ -40,12 +40,6 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - name: Setup Proxy
-        working-directory: ./proxy
-        run: |
-          ./install_caddy.sh
-          mv caddy Caddyfile ../sk-lexisnexis/
-
       - uses: ./.github/actions/setup
         id: sk-setup
         with:

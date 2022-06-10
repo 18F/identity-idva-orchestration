@@ -52,7 +52,7 @@ jobs:
 
       - name: Deploy application
         run: |
-          cd sk-sdk
           mkdir public
           mv singularkey.js public/
           cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling
+        working-directory: sk-sdk

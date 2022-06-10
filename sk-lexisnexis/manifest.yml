@@ -16,4 +16,3 @@ applications:
       - outbound-proxy
     env:
       SK_SECRETS: ((SK_SECRETS))
-

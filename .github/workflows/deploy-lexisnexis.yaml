@@ -40,15 +40,10 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - name: Setup Proxy
-        working-directory: ./proxy
-        run: |
-          ./install_caddy.sh
-          mv caddy Caddyfile ../sk-lexisnexis/
-
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           require-redis: "true"
           require-postgres: "true"
           require-s3: "true"
@@ -56,3 +51,7 @@ jobs:
           app-directory: "sk-lexisnexis"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
           standard-deployment: "true"
+
+      - name: Add network policies
+        run: |
+          cf add-network-policy sk-lexisnexis outbound-proxy -s ${{ steps.cf-setup.outputs.target-environment }}-public --protocol tcp --port 8080

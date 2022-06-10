@@ -44,6 +44,7 @@ jobs:
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           require-redis: "true"
           require-postgres: "true"
           require-s3: "true"

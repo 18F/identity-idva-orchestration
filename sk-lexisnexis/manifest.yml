@@ -14,9 +14,5 @@ applications:
       - sk-postgres
       - sk-s3
       - outbound-proxy
-    sidecars:
-      - name: local-proxy
-        process_types: ['web']
-        command: ./caddy run --config Caddyfile
     env:
       SK_SECRETS: ((SK_SECRETS))

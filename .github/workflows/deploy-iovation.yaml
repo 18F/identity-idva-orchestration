@@ -40,18 +40,17 @@ jobs:
           target_env_upper=${{ steps.cf-setup.outputs.target-environment-upper }}
           echo "SK_SECRETS=SK_SECRETS_$target_env_upper" >> $GITHUB_ENV
 
-      - name: Setup Proxy
-        working-directory: ./proxy
-        run: |
-          ./install_caddy.sh
-          mv caddy Caddyfile ../sk-iovation/
-
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           require-redis: "true"
           require-postgres: "true"
           s3-url: "s3://com.singularkey.gsa/dev/microservice-iovation"
           app-directory: "sk-iovation"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
           standard-deployment: "true"
+
+      - name: Add network policies
+        run: |
+          cf add-network-policy sk-iovation outbound-proxy -s ${{ steps.cf-setup.outputs.target-environment }}-public --protocol tcp --port 8080

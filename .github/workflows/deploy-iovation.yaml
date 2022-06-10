@@ -50,3 +50,7 @@ jobs:
           app-directory: "sk-iovation"
           sk-secrets: ${{ secrets[env.SK_SECRETS] }}
           standard-deployment: "true"
+
+      - name: Add network policies
+        run: |
+          cf add-network-policy sk-iovation outbound-proxy -s ${{ steps.cf-setup.outputs.target-environment }}-public --protocol tcp --port 8080

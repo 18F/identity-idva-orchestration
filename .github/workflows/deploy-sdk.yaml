@@ -44,6 +44,7 @@ jobs:
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           s3-url: "s3://com.singularkey.gsa/dev/sk-sdk"
           app-directory: "sk-sdk"
           sk-secrets: "{}"

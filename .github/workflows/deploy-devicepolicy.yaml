@@ -43,6 +43,7 @@ jobs:
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           require-redis: "true"
           require-postgres: "true"
           s3-url: "s3://com.singularkey.gsa/dev/microservice-devicepolicy"

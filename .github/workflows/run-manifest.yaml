@@ -44,6 +44,7 @@ jobs:
       - uses: ./.github/actions/setup
         id: sk-setup
         with:
+          target-environment: ${{ steps.cf-setup.outputs.target-environment }}
           require-elasticsearch: "true"
           s3-url: "s3://com.singularkey.gsa/dev/manifest"
           app-directory: "sk-manifest"

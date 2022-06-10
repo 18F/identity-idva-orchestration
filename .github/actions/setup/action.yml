@@ -49,8 +49,7 @@ inputs:
 
   target-environment:
     description: 'String indicating the targeted space (dev/test/prod).'
-    required: false
-    default: dev
+    required: true
 
   disable-executable:
     description: 'Boolean indicating whether to disable adding executable permissions to downloaded binaries.'

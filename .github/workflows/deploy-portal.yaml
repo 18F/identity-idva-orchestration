@@ -52,7 +52,6 @@ jobs:
 
       - name: Deploy application
         run: |
-          cd sk-portal
           tar -xf build.tar.gz
           rm build.tar.gz
           # Execute a sed command on all files in the 'build' directory to
@@ -61,3 +60,4 @@ jobs:
           # replace sdk url
           find ./build -type f -execdir sed -i 's/devsdk\.app\.cloud\.gov/idva-sdk-${{ steps.cf-setup.outputs.target-environment }}\.app\.cloud\.gov/g' '{}' +
           cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling
+        working-directory: sk-portal

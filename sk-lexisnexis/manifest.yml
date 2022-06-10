@@ -13,7 +13,7 @@ applications:
       - sk-redis
       - sk-postgres
       - sk-s3
+      - outbound-proxy
     env:
       SK_SECRETS: ((SK_SECRETS))
-      HTTPS_PROXY: http://outbound-proxy-((ENVIRONMENT)).apps.internal:8080
-      HTTP_PROXY: http://outbound-proxy-((ENVIRONMENT)).apps.internal:8080
+

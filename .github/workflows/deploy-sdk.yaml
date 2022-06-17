@@ -54,5 +54,5 @@ jobs:
         run: |
           mkdir public
           mv singularkey.js public/
-          cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling
+          cf push --var ENVIRONMENT_NAME=${{ steps.cf-setup.outputs.target-environment }} --strategy rolling > /dev/null
         working-directory: sk-sdk

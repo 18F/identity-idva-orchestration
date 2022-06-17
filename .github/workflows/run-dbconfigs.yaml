@@ -56,7 +56,7 @@ jobs:
       - name: Deploy application
         run: |
           cd sk-dbconfigs
-          cf push --vars-file vars.yaml --task
+          cf push --vars-file vars.yaml --task > /dev/null
 
       - name: Run dbconfigs task
         run: cf run-task sk-dbconfigs --name task

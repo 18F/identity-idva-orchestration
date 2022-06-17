@@ -127,7 +127,7 @@ runs:
       run: |
         if [[ ${{ inputs.standard-deployment }} == "true" ]]; then
           cd ${{ inputs.app-directory }}
-          cf push --vars-file vars.yaml --strategy rolling
+          cf push --vars-file vars.yaml --strategy rolling > /dev/null
         fi
 
     - name: Delete deployment on error

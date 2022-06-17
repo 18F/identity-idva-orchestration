@@ -53,7 +53,7 @@ jobs:
       - name: Deploy application
         run: |
           cd sk-esconfigs
-          cf push --vars-file vars.yaml --task
+          cf push --vars-file vars.yaml --task > /dev/null
 
       - name: Run esconfigs task
         run: cf run-task sk-esconfigs --name task

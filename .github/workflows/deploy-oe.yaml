@@ -53,4 +53,4 @@ jobs:
       - name: Perform Deployment
         run: |
           cd sk-oe/
-          cf push --vars-file vars.yaml --vars-file vars-${{ steps.cf-setup.outputs.target-environment }}.yaml --strategy rolling
+          cf push --vars-file vars.yaml --vars-file vars-${{ steps.cf-setup.outputs.target-environment }}.yaml --strategy rolling > /dev/null

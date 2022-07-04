@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for run-manifest in deploy ALL to finish
-        uses: lewagon/wait-on-check-action@v1.1.1
+        uses: lewagon/wait-on-check-action@v1.1.2
         with:
           ref: ${{ github.ref }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
